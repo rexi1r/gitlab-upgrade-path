@@ -1,0 +1,15 @@
+build:
+  image: node:14.17.6
+
+  script:
+    - yarn install
+    - yarn build
+    - mv public old
+    - mv build public
+  artifacts:
+    paths:
+      - public
+    expire_in: 1 day
+
+  only:
+    - main
