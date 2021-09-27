@@ -1,4 +1,5 @@
-deploy:
+pages:
+  stage: deploy
   image: node:14.17.6
 
   script:
