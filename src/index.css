@@ -1,0 +1,40 @@
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: "Arial", sans-serif;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+html {
+  background: #18191d;
+}
+
+body {
+  margin: 0;
+  color: white;
+  font-family: "Roboto", sans-serif;
+}
+
+pre {
+  background: #000;
+  border: 2px solid transparent;
+  overflow: hidden;
+  padding: 15px;
+}
+
+code {
+  background: #000;
+  padding-top: 3px;
+  padding-bottom: 2px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+a {
+  color: dodgerblue;
+}
