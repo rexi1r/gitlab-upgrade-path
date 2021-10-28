@@ -1,9 +1,10 @@
 setup:
-  stage: deploy
+  stage: build
   image: ruby:2.7.4
 
   script:
     - cd ruby
+    - bundle install
     - bundle exe collect_versions.rb
   artifacts:
     paths:
@@ -16,7 +17,7 @@ pages:
 
   script:
     - find .
-    - setup.sh
+    - ./setup.sh
     - yarn install
     - yarn build
     - mv public old
