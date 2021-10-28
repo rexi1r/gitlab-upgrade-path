@@ -1,0 +1,49 @@
+GEM
+  specs:
+    activesupport (6.1.4.1)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      i18n (>= 1.6, < 2)
+      minitest (>= 5.1)
+      tzinfo (~> 2.0)
+      zeitwerk (~> 2.3)
+    amazing_print (1.4.0)
+    concurrent-ruby (1.1.9)
+    ethon (0.14.0)
+      ffi (>= 1.15.0)
+    ffi (1.15.3)
+    gitlab_chronic_duration (0.10.6.2)
+      numerizer (~> 0.2)
+    i18n (1.8.10)
+      concurrent-ruby (~> 1.0)
+    kramdown (2.3.1)
+      rexml
+    labclient (0.4.2)
+      activesupport (>= 6.0)
+      amazing_print (>= 1.2)
+      gitlab_chronic_duration (>= 0.10.6.2)
+      kramdown (>= 2.1.0)
+      oj (>= 3.10)
+      ougai (>= 2.0)
+      typhoeus (>= 1.4)
+    minitest (5.14.4)
+    numerizer (0.2.0)
+    oj (3.13.9)
+    ougai (2.0.0)
+      oj (~> 3.10)
+    rexml (3.2.5)
+    sem_version (2.0.1)
+    typhoeus (1.4.0)
+      ethon (>= 0.9.0)
+    tzinfo (2.0.4)
+      concurrent-ruby (~> 1.0)
+    zeitwerk (2.5.1)
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  labclient
+  sem_version
+
+BUNDLED WITH
+   2.2.15

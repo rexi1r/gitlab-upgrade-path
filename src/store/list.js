@@ -1,5 +1,6 @@
 import flux from "@aust/react-flux";
 import VersionList from "util/all";
+import { orderBy, reverse } from "lodash";
 const semver = require("semver");
 
 function initialSettings() {
@@ -27,6 +28,24 @@ store.register("version/add", async (dispatch, version) => {
   let notes = store.selectState("notes");
   notes.push(version);
   await dispatch("list/update", { list: list, notes: notes });
+});
+
+// ========================================================================
+// -- Viable Targets
+// ========================================================================
+store.addSelector("targets", () => {
+  let current = store.useState("current");
+  let list = store.selectState("list");
+
+  if (list) {
+    list = reverse(orderBy(list, ["major", "minor"]));
+  }
+
+  if (!current) {
+    return list;
+  }
+
+  return list.filter((x) => semver.gt(x.version, current.version));
 });
 
 // ========================================================================

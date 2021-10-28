@@ -1,8 +1,22 @@
+setup:
+  stage: deploy
+  image: ruby:2.7.4
+
+  script:
+    - cd ruby
+    - bundle exe collect_versions.rb
+  artifacts:
+    paths:
+      - ruby/all.js
+    expire_in: 1 day
+
 pages:
   stage: deploy
   image: node:14.17.6
 
   script:
+    - find .
+    - setup.sh
     - yarn install
     - yarn build
     - mv public old

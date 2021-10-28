@@ -5,7 +5,7 @@ function DistroInstall({ distro, selectedVersion }) {
   return (
     <Box sx={style.install}>
       {distro === "ubuntu" && (
-        <div>apt-get installgitlab-ee={selectedVersion.version}-ee.0</div>
+        <div>apt-get install gitlab-ee={selectedVersion.version}-ee.0</div>
       )}
       {distro === "centos" && (
         <div>yum install gitlab-ee={selectedVersion.version}-ee.0.el8</div>

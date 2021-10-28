@@ -16,3 +16,8 @@ POC to generate upgrade paths and provide other helpful upgrade information
 - Show checkpoint steps
   - Database migrations
   - Repo Checks
+
+# TODO
+
+no back button
+no going backwards

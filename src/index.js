@@ -11,6 +11,7 @@ import App from "./App";
 
 import "store/sys";
 import "store/list";
+import "util/latest"; // Placeholder for versions
 import "util/versions"; // Placeholder for versions
 
 ReactDOM.render(

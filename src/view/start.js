@@ -20,12 +20,14 @@ const filterOptions = createFilterOptions({
 });
 
 export default function Start() {
-  let targets = flux.list.selectState("list"); // Collect Versions
+  let targets = flux.list.useState("targets"); // Collect Versions
 
   const [distro, setDistro] = useState("ubuntu");
   const handleDistro = (event) => setDistro(event.target.value);
 
-  const [current, setCurrent] = useState();
+  let current = flux.list.useState("current"); // Collect Versions
+
+  // const [current, setCurrent] = useState();
   const [target, setTarget] = useState(targets[0]);
 
   async function buildPath() {
@@ -35,7 +37,7 @@ export default function Start() {
       distro: distro,
     });
 
-    flux.dispatch("sys/update", { status: "path" });
+    flux.dispatch("sys/nav", "path");
   }
 
   return (
@@ -77,14 +79,16 @@ export default function Start() {
         <Autocomplete
           disablePortal
           id='combo-box-demo'
-          options={VersionList}
+          options={VersionList.slice(1, VersionList.length)}
           sx={{ flex: 1, margin: 1 }}
           groupBy={(option) => option.major}
           getOptionLabel={(option) => option.version}
           filterOptions={filterOptions}
           renderInput={(params) => <TextField {...params} label='Current' />}
           onChange={(event, newValue) => {
-            setCurrent(newValue);
+            flux.dispatch("list/update", {
+              current: newValue,
+            });
           }}
           autoHighlight
         />

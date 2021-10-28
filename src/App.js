@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import flux from "@aust/react-flux";
 import Nav from "util/nav";
 
 // Font Awesome
@@ -10,6 +11,10 @@ import { fab } from "@fortawesome/free-brands-svg-icons";
 library.add(fas, fab);
 
 function App() {
+  useEffect(() => {
+    flux.dispatch("sys/nav", "start");
+  }, []);
+
   return <Nav />;
 }
 

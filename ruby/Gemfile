@@ -1,0 +1,2 @@
+gem 'labclient'
+gem 'sem_version'
