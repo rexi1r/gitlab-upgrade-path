@@ -1,5 +1,4 @@
 import flux from "@aust/react-flux";
-import { last, split } from "lodash";
 
 function initialSettings() {
   return {
@@ -44,9 +43,6 @@ window.addEventListener("popstate", function () {
   if (window.location.pathname === "/") {
     // flux.dispatch("sys/nav", "start");
   } else {
-    // let path = last(split(window.location.pathname, "/"));
-    // window.history.replaceState(null, null, "/upgrade-path/" + path);
-
     let path = window.location.hash.substring(1);
     flux.dispatch("sys/nav", path);
   }
