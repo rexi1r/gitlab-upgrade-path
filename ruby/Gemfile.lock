@@ -1,4 +1,5 @@
 GEM
+  remote: https://rubygems.org/
   specs:
     activesupport (6.1.4.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
@@ -8,9 +9,9 @@ GEM
       zeitwerk (~> 2.3)
     amazing_print (1.4.0)
     concurrent-ruby (1.1.9)
-    ethon (0.14.0)
+    ethon (0.15.0)
       ffi (>= 1.15.0)
-    ffi (1.15.3)
+    ffi (1.15.4)
     gitlab_chronic_duration (0.10.6.2)
       numerizer (~> 0.2)
     i18n (1.8.10)
