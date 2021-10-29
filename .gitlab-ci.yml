@@ -17,7 +17,6 @@ pages:
   image: node:14.17.6
 
   script:
-    - find .
     - ./setup.sh
     - yarn install
     - yarn build
