@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import flux from "@aust/react-flux";
 import { reverse } from "lodash";
+
 import Box from "@mui/material/Box";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import Button from "@mui/material/Button";
+import Snackbar from "@mui/material/Snackbar";
+import AssignmentIcon from "@mui/icons-material/Assignment";
 import Upgrade from "components/upgrade";
 
 function Path() {
@@ -11,6 +13,27 @@ function Path() {
   let upgradePath = flux.list.selectState("upgradePath");
 
   const [selectedVersion, setSelectedVersion] = useState(null);
+
+  // Clipboard
+  const [open, setOpen] = useState(false);
+  const handleClick = () => {
+    let textPath = upgradePath.map((x) => x.version).join(" => ");
+    navigator.clipboard.writeText(textPath);
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    setOpen(false);
+  };
+
+  let currentStyle = {};
+  if (selectedVersion) {
+    currentStyle[selectedVersion.version] = {
+      color: "yellow",
+      border: 1,
+      borderColor: "info.dark",
+    };
+  }
 
   return (
     <Box sx={style.view}>
@@ -20,17 +43,34 @@ function Path() {
         <Box sx={style.versionList}>
           {reverse(upgradePath).map((x, i) => (
             <Box key={x.version} sx={style.versionBox}>
-              <Box onClick={() => setSelectedVersion(x)} sx={style.version}>
+              <Button
+                variant='contained'
+                onClick={() => setSelectedVersion(x)}
+                sx={{ ...style.version, ...currentStyle[x.version] }}
+              >
                 {x.version}
-              </Box>
-              {i + 1 < upgradePath.length && <ArrowForwardIosIcon />}
-              {i + 1 === upgradePath.length && <CheckCircleIcon />}
+              </Button>
             </Box>
           ))}
         </Box>
+
+        <Button
+          variant='contained'
+          onClick={handleClick}
+          sx={style.clipboardBtn}
+        >
+          <AssignmentIcon />
+        </Button>
       </Box>
 
       {selectedVersion && <Upgrade selectedVersion={selectedVersion} />}
+
+      <Snackbar
+        open={open}
+        autoHideDuration={2000}
+        onClose={handleClose}
+        message='Copied to Clipboard!'
+      />
     </Box>
   );
 }
@@ -67,37 +107,33 @@ const style = {
     opacity: 0.7,
   },
 
+  clipboardBtn: {
+    alignSelf: "flex-end",
+  },
+
   versionList: {
     flex: 1,
     display: "flex",
-    flexDirection: "row",
     flexWrap: "wrap",
-    alignItems: "center",
-    justifyContent: "space-around",
     padding: 2,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   versionBox: {
-    display: "flex",
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around",
+    margin: 1,
+    marginBottom: 1,
+  },
 
-    margin: 0.15,
+  versionIcon: {
+    flex: 1,
+    textAlign: "center",
   },
 
   version: {
-    fontSize: 24,
-    fontWeight: 500,
-    border: 1,
-    padding: 1,
-    paddingRight: 2,
-    paddingLeft: 2,
-    borderColor: "info.dark",
+    fontSize: 22,
+    color: "white",
     bgcolor: "grey.900",
-    borderRadius: 2,
-    textAlign: "center",
     minWidth: 100,
   },
 };

@@ -1,17 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import flux from "@aust/react-flux";
 import Box from "@mui/material/Box";
 import DistroIcons from "components/distro-icons";
 import DistroInstall from "components/distro-install";
 import Button from "@mui/material/Button";
 import ReactMarkdown from "react-markdown";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import Snackbar from "@mui/material/Snackbar";
 
 function Upgrade({ selectedVersion = {} }) {
   let distro = flux.list.selectState("distro");
   let notes = flux.list.selectState("upgradeNotes", selectedVersion);
 
-  console.log("selected", selectedVersion);
-  console.log("notes", notes);
+  // Clipboard
+  const [open, setOpen] = useState(false);
+  const handleClick = () => {
+    // let textPath = upgradePath.map((x) => x.version).join(" => ");
+    // navigator.clipboard.writeText(textPath);
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    setOpen(false);
+  };
 
   return (
     <Box sx={style.box}>
@@ -19,6 +30,13 @@ function Upgrade({ selectedVersion = {} }) {
         <DistroIcons distro={distro} />
         <DistroInstall selectedVersion={selectedVersion} distro={distro} />
         {selectedVersion.blog}
+        <Button
+          variant='contained'
+          onClick={handleClick}
+          sx={style.clipboardBtn}
+        >
+          <AssignmentIcon />
+        </Button>
       </Box>
 
       {notes.blog && (
@@ -39,6 +57,13 @@ function Upgrade({ selectedVersion = {} }) {
           <ReactMarkdown>{notes.notes}</ReactMarkdown>
         </Box>
       )}
+
+      <Snackbar
+        open={open}
+        autoHideDuration={2000}
+        onClose={handleClose}
+        message='Copied to Clipboard!'
+      />
     </Box>
   );
 }
@@ -49,7 +74,6 @@ const style = {
   box: {
     display: "flex",
     flex: 1,
-    // justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
     overflowY: "auto",
@@ -60,13 +84,13 @@ const style = {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-
-    // bgcolor: "background.paper",
-    // border: 1,
-    // borderColor: "info.dark",
-    // borderRadius: 1,
     padding: 1,
     margin: 1,
     opacity: 0.8,
+  },
+
+  clipboardBtn: {
+    marginLeft: 1,
+    alignSelf: "center",
   },
 };

@@ -5,4 +5,5 @@ let latest = VersionList[0];
 flux.dispatch("version/add", {
   major: latest.major,
   minor: latest.minor,
+  blog: "https://about.gitlab.com/releases/categories/releases/",
 });

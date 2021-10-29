@@ -31,6 +31,8 @@ export default function Start() {
   const [target, setTarget] = useState(targets[0]);
 
   async function buildPath() {
+    if (!current) return false;
+
     await flux.dispatch("list/update", {
       current: current,
       target: target,
@@ -78,7 +80,7 @@ export default function Start() {
       >
         <Autocomplete
           disablePortal
-          id='combo-box-demo'
+          defaultValue={current}
           options={VersionList.slice(1, VersionList.length)}
           sx={{ flex: 1, margin: 1 }}
           groupBy={(option) => option.major}
@@ -95,8 +97,8 @@ export default function Start() {
 
         <Autocomplete
           disablePortal
-          id='combo-box-demo'
           options={targets}
+          defaultValue={targets[0]}
           groupBy={(option) => option.major}
           sx={{ flex: 1, margin: 1 }}
           getOptionLabel={(option) => option.version}
@@ -159,6 +161,7 @@ export default function Start() {
           variant='contained'
           size='large'
           onClick={buildPath}
+          disabled={!current || !target}
         >
           Go!
         </Button>

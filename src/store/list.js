@@ -55,6 +55,9 @@ store.addSelector("upgradePath", () => {
   let current = store.selectState("current");
   let list = store.selectState("list");
 
+  // Sorting
+  list = reverse(orderBy(list, ["major", "minor"]));
+
   return list.filter((x) => semver.gt(x.version, current.version));
 });
 
