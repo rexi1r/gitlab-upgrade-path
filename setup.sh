@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cp ruby/all.js src/util
+
 # Helper to remove the need for manual entries
 list='src/util/versions.js'
 echo '' > $list 
