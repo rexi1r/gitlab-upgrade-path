@@ -1,23 +1,34 @@
-https://davinwalker.gitlab.io/upgrade-path/
+https://gitlab-com.gitlab.io/support/toolbox/upgrade-path
 
 # Upgrade Path
 
-POC to generate upgrade paths and provide other helpful upgrade information
+Generate supported upgrade paths to assist with updating GitLab.
 
 # Goals
 
-- Select Current and Target versions, show path.
-- Select Install Type and provide commands to execute upgrade
+- Automatically Collect latest patch versions and latest minor version
+- Show path between a selected starting and target version
+- Include helpers to make upgrading easier. Installation commands, links to information, and etc
 
 ## Potentially
 
 - Show deprecations and other needed action items
   - Ex: PostgreSQL 11 Upgrade, Legacy Storage depcrecation
 - Show checkpoint steps
+
   - Database migrations
   - Repo Checks
 
-# TODO
+- Guided workflow for upgrading
+  - Preflight, deprecation
+  - Upgrade process
+  - Post Upgrade checks
 
-no back button
-no going backwards
+# Adding a new supported path
+
+Whenever a new release requires a minor version it current will need a manually modification.
+
+Steps
+
+1. Duplicate/create a new version file in `src/versions`
+2. Update Major, Minor, and Blog release

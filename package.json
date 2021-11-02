@@ -1,7 +1,7 @@
 {
   "name": "upgrade-path",
   "version": "0.1.0",
-  "homepage": "https://davinwalker.gitlab.io/upgrade-path/",
+  "homepage": "https://gitlab-com.gitlab.io/support/toolbox/upgrade-path",
   "private": true,
   "dependencies": {
     "@aust/react-flux": "^1.3.1",
