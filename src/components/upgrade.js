@@ -32,6 +32,8 @@ function Upgrade({ selectedVersion = {} }) {
         return `yum install gitlab-ee=${selectedVersion.version}-ee.0`;
       case "docker":
         return `docker run gitlab-ee=${selectedVersion.version}-ee.0`;
+      default:
+        return "";
     }
   }
 
