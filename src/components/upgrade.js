@@ -16,13 +16,24 @@ function Upgrade({ selectedVersion = {} }) {
   const [open, setOpen] = useState(false);
   const handleClick = () => {
     // let textPath = upgradePath.map((x) => x.version).join(" => ");
-    // navigator.clipboard.writeText(textPath);
+    navigator.clipboard.writeText(version());
     setOpen(true);
   };
 
   const handleClose = (event, reason) => {
     setOpen(false);
   };
+
+  function version() {
+    switch (distro) {
+      case "ubuntu":
+        return `apt-get install gitlab-ee=${selectedVersion.version}-ee.0`;
+      case "centos":
+        return `yum install gitlab-ee=${selectedVersion.version}-ee.0`;
+      case "docker":
+        return `docker run gitlab-ee=${selectedVersion.version}-ee.0`;
+    }
+  }
 
   return (
     <Box sx={style.box}>

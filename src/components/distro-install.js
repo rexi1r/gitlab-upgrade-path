@@ -11,7 +11,7 @@ function DistroInstall({ distro, selectedVersion }) {
         <div>yum install gitlab-ee={selectedVersion.version}-ee.0.el8</div>
       )}
       {distro === "docker" && (
-        <div>docker run gitlab/gitlab-ee:14.3.0-ee.0</div>
+        <div>docker run gitlab-ee={selectedVersion.version}-ee.0</div>
       )}
     </Box>
   );
