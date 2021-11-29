@@ -16,12 +16,11 @@ store.register("sys/init", async (dispatch) => {
 // Navigation Updates
 store.register("sys/nav", async (dispatch, location) => {
   console.log("location nav", location);
-  let status = store.selectState("status");
-  console.log("status", status);
+  // let status = store.selectState("status");
   // window.history.pushState(null, null, "/upgrade-path/" + status);
   // window.history.pushState(null, null, "#" + location);
   // window.history.replaceState(undefined, undefined, "#" + location);
-  window.location.hash = "#" + location;
+  // window.location.hash = "#" + location;
   await dispatch("sys/update", { status: location });
 });
 
@@ -39,13 +38,13 @@ store.register("sys/update", async (dispatch, payload) => {
 });
 // ========================================================================
 
-window.addEventListener("popstate", function () {
-  if (window.location.pathname === "/") {
-    // flux.dispatch("sys/nav", "start");
-  } else {
-    let path = window.location.hash.substring(1);
-    flux.dispatch("sys/nav", path);
-  }
-});
+// window.addEventListener("popstate", function () {
+//   if (window.location.pathname === "/") {
+//     // flux.dispatch("sys/nav", "start");
+//   } else {
+//     let path = window.location.hash.substring(1);
+//     flux.dispatch("sys/nav", path);
+//   }
+// });
 
 store.register("sys/reset", () => initialSettings);

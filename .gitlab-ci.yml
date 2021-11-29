@@ -1,6 +1,6 @@
 setup:
   stage: build
-  image: ruby:2.6.6
+  image: ruby:3.0.3
 
   script:
     - cd ruby
