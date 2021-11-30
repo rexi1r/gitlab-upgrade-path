@@ -14,11 +14,11 @@ GEM
     ffi (1.15.4)
     gitlab_chronic_duration (0.10.6.2)
       numerizer (~> 0.2)
-    i18n (1.8.10)
+    i18n (1.8.11)
       concurrent-ruby (~> 1.0)
     kramdown (2.3.1)
       rexml
-    labclient (0.4.2)
+    labclient (0.5.0)
       activesupport (>= 6.0)
       amazing_print (>= 1.2)
       gitlab_chronic_duration (>= 0.10.6.2)
@@ -47,4 +47,4 @@ DEPENDENCIES
   sem_version
 
 BUNDLED WITH
-   2.2.15
+   2.2.32
