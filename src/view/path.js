@@ -6,13 +6,20 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import Fab from "@mui/material/Fab";
+import MapIcon from "@mui/icons-material/Map";
+
+// Local Components
+import Overview from "components/overview";
 import Upgrade from "components/upgrade";
 
 function Path() {
   let current = flux.list.selectState("current");
   let upgradePath = flux.list.selectState("upgradePath");
 
-  const [selectedVersion, setSelectedVersion] = useState(null);
+  const mapVersion = { version: "map" };
+  const [selectedVersion, setSelectedVersion] = useState(mapVersion);
 
   // Clipboard
   const [open, setOpen] = useState(false);
@@ -26,27 +33,39 @@ function Path() {
     setOpen(false);
   };
 
-  let currentStyle = {};
-  if (selectedVersion) {
-    currentStyle[selectedVersion.version] = {
-      color: "yellow",
-      border: 1,
-      borderColor: "info.dark",
-    };
-  }
-
   return (
     <Box sx={style.view}>
+      <Box sx={style.fab}>
+        <Fab
+          size='small'
+          color='primary'
+          aria-label='add'
+          onClick={() => flux.dispatch("sys/nav", "start")}
+        >
+          <ArrowBackIcon />
+        </Fab>
+      </Box>
+
       <Box sx={style.versionContainer}>
         <Box sx={style.versionStart}>{current.version}</Box>
 
         <Box sx={style.versionList}>
+          <Box sx={style.versionBox}>
+            <Button
+              variant='contained'
+              sx={style.version("map" === selectedVersion.version)}
+              onClick={() => setSelectedVersion(mapVersion)}
+            >
+              <MapIcon sx={{ fontSize: 35 }} />
+            </Button>
+          </Box>
+
           {reverse(upgradePath).map((x, i) => (
             <Box key={x.version} sx={style.versionBox}>
               <Button
                 variant='contained'
                 onClick={() => setSelectedVersion(x)}
-                sx={{ ...style.version, ...currentStyle[x.version] }}
+                sx={style.version(x.version === selectedVersion.version)}
               >
                 {x.version}
               </Button>
@@ -63,7 +82,13 @@ function Path() {
         </Button>
       </Box>
 
-      {selectedVersion && <Upgrade selectedVersion={selectedVersion} />}
+      {selectedVersion && selectedVersion.version !== "map" && (
+        <Upgrade selectedVersion={selectedVersion} />
+      )}
+
+      {selectedVersion && selectedVersion.version === "map" && (
+        <Overview path={reverse(upgradePath)} />
+      )}
 
       <Snackbar
         open={open}
@@ -83,6 +108,11 @@ const style = {
     flexDirection: "column",
     alignItems: "stretch",
     height: "100vh",
+  },
+
+  fab: {
+    position: "absolute",
+    margin: 1,
   },
 
   versionContainer: {
@@ -130,10 +160,22 @@ const style = {
     textAlign: "center",
   },
 
-  version: {
-    fontSize: 22,
-    color: "white",
-    bgcolor: "grey.900",
-    minWidth: 100,
+  version: function (highlight = false) {
+    let output = {
+      fontSize: 22,
+      color: "white",
+      bgcolor: "grey.900",
+      minWidth: 100,
+    };
+
+    if (highlight) {
+      output.color = "yellow";
+      output.border = 1;
+      output.borderColor = "info.dark";
+      //     border: 1,
+      //     borderColor: "info.dark",
+    }
+
+    return output;
   },
 };

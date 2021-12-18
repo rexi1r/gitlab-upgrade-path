@@ -12,6 +12,9 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import Checkbox from "@mui/material/Checkbox";
+
+// Local Components
 import VersionList from "util/all";
 
 const filterOptions = createFilterOptions({
@@ -25,9 +28,14 @@ export default function Start() {
   const [distro, setDistro] = useState("ubuntu");
   const handleDistro = (event) => setDistro(event.target.value);
 
+  const [edition, setEdition] = useState("ee");
+  const handleEdition = (event) => setEdition(event.target.value);
+
+  const [auto, setAuto] = useState(false);
+  const handleAuto = () => setAuto(!auto);
+
   let current = flux.list.useState("current"); // Collect Versions
 
-  // const [current, setCurrent] = useState();
   const [target, setTarget] = useState(targets[0]);
 
   async function buildPath() {
@@ -37,21 +45,15 @@ export default function Start() {
       current: current,
       target: target,
       distro: distro,
+      edition: edition,
+      auto: auto,
     });
 
     flux.dispatch("sys/nav", "path");
   }
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "stretch",
-        justifyContent: "center",
-        height: "100vh",
-      }}
-    >
+    <Box sx={style.view}>
       <Box sx={{ flex: 3 }}>
         <Image src={"gitlab-icon.svg"} />
       </Box>
@@ -68,21 +70,12 @@ export default function Start() {
         <div>Select Versions</div>
       </Box>
 
-      <Box
-        sx={{
-          flex: 2,
-          display: "flex",
-          justifyContent: "space-around",
-          alignItems: "center",
-          width: "80vw",
-          margin: "auto",
-        }}
-      >
+      <Box sx={style.autoBox}>
         <Autocomplete
           disablePortal
           defaultValue={current}
           options={VersionList.slice(1, VersionList.length)}
-          sx={{ flex: 1, margin: 1 }}
+          sx={style.auto}
           groupBy={(option) => option.major}
           getOptionLabel={(option) => option.version}
           filterOptions={filterOptions}
@@ -100,7 +93,7 @@ export default function Start() {
           options={targets}
           defaultValue={targets[0]}
           groupBy={(option) => option.major}
-          sx={{ flex: 1, margin: 1 }}
+          sx={style.auto}
           getOptionLabel={(option) => option.version}
           filterOptions={filterOptions}
           renderInput={(params) => <TextField {...params} label='Target' />}
@@ -111,51 +104,76 @@ export default function Start() {
         />
       </Box>
 
-      <Box
-        sx={{
-          flex: 2,
-          display: "flex",
-          justifyContent: "space-around",
-          alignItems: "center",
-          width: "80vw",
-          margin: "auto",
-        }}
-      >
-        <FormControl component='fieldset'>
-          <FormLabel component='legend'>Distro</FormLabel>
-          <RadioGroup
-            aria-label='distro'
-            defaultValue='ubuntu'
-            name='radio-buttons-group'
-            onChange={handleDistro}
-          >
+      <Box sx={style.options}>
+        <Box sx={style.choices}>
+          <FormControl component='fieldset'>
+            <FormLabel component='legend'>Edition</FormLabel>
+            <RadioGroup
+              aria-label='edition'
+              defaultValue='ee'
+              name='radio-buttons-group'
+              onChange={handleEdition}
+            >
+              <FormControlLabel
+                value='ee'
+                control={<Radio />}
+                label='Enterprise'
+              />
+              <FormControlLabel
+                value='ce'
+                control={<Radio />}
+                label='Community'
+              />
+            </RadioGroup>
+          </FormControl>
+        </Box>
+
+        <Box sx={style.choices}>
+          <FormControl component='fieldset'>
+            <FormLabel component='legend'>Distro</FormLabel>
+            <RadioGroup
+              aria-label='distro'
+              defaultValue='ubuntu'
+              name='radio-buttons-group'
+              onChange={handleDistro}
+            >
+              <FormControlLabel
+                value='ubuntu'
+                control={<Radio />}
+                label='Ubuntu'
+              />
+              <FormControlLabel
+                value='centos'
+                control={<Radio />}
+                label='Centos'
+              />
+              <FormControlLabel
+                value='docker'
+                control={<Radio />}
+                label='Docker'
+              />
+            </RadioGroup>
+          </FormControl>
+        </Box>
+
+        <Box sx={style.choices}>
+          <FormControl component='fieldset'>
+            <FormLabel component='legend'>Command Options</FormLabel>
             <FormControlLabel
-              value='ubuntu'
-              control={<Radio />}
-              label='Ubuntu'
+              control={
+                <Checkbox
+                  onChange={handleAuto}
+                  checked={auto}
+                  inputProps={{ "aria-label": "controlled" }}
+                />
+              }
+              label='Auto Install'
             />
-            <FormControlLabel
-              value='centos'
-              control={<Radio />}
-              label='Centos'
-            />
-            <FormControlLabel
-              value='docker'
-              control={<Radio />}
-              label='Docker'
-            />
-          </RadioGroup>
-        </FormControl>
+          </FormControl>
+        </Box>
       </Box>
 
-      <Box
-        sx={{
-          flex: 3,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      <Box sx={style.go}>
         <Button
           color='info'
           variant='contained'
@@ -169,3 +187,48 @@ export default function Start() {
     </Box>
   );
 }
+
+const style = {
+  view: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "stretch",
+    justifyContent: "center",
+    height: "100vh",
+  },
+
+  autoBox: {
+    flex: 2,
+    display: "flex",
+    justifyContent: "space-around",
+    alignItems: "center",
+    width: "80vw",
+    margin: "auto",
+  },
+
+  auto: {
+    flex: 1,
+    margin: 1,
+  },
+
+  options: {
+    flex: 2,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "80vw",
+    margin: "auto",
+  },
+
+  choices: {
+    marginLeft: 5,
+    marginRight: 5,
+  },
+
+  go: {
+    flex: 3,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+};

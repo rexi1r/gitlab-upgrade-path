@@ -1,6 +1,7 @@
 import flux from "@aust/react-flux";
 import VersionList from "util/all";
-import { orderBy, reverse } from "lodash";
+import { orderBy, reverse, padStart } from "lodash";
+
 const semver = require("semver");
 
 function initialSettings() {
@@ -10,6 +11,8 @@ function initialSettings() {
     target: null,
     distro: null,
     notes: [],
+    auto: false,
+    edition: "ee",
   };
 }
 
@@ -21,6 +24,12 @@ store.register("version/add", async (dispatch, version) => {
   let latest = VersionList.find((x) => {
     return x.major === version.major && x.minor === version.minor;
   });
+
+  // Add Display Helpers / WhatsNew
+  latest.display = `${latest.major}.${latest.minor}`;
+  let major = `${padStart(latest.major, 2, 0)}`;
+  let minor = `${padStart(latest.minor, 2, 0)}`;
+  latest.whatsnew = `${major}_${minor}`;
 
   let list = store.selectState("list");
   list.push(latest);
@@ -65,12 +74,24 @@ store.addSelector("upgradePath", () => {
 // -- Collect Notes
 // ========================================================================
 store.addSelector("upgradeNotes", (state, version) => {
-  console.log("upgradeNotes", version);
   let notes = store.selectState("notes");
 
   return notes.find((x) => {
     return x.major === version.major && x.minor === version.minor;
   });
+});
+
+// ========================================================================
+// -- Auto Install
+// ========================================================================
+store.addSelector("shouldAuto", () => {
+  let auto = store.selectState("auto");
+
+  if (auto) {
+    return "-y";
+  } else {
+    return "";
+  }
 });
 
 // ========================================================================

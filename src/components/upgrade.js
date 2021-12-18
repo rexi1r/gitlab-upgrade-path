@@ -1,21 +1,29 @@
 import React, { useState } from "react";
 import flux from "@aust/react-flux";
 import Box from "@mui/material/Box";
-import DistroIcons from "components/distro-icons";
-import DistroInstall from "components/distro-install";
 import Button from "@mui/material/Button";
 import ReactMarkdown from "react-markdown";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import Snackbar from "@mui/material/Snackbar";
 
-function Upgrade({ selectedVersion = {} }) {
-  let distro = flux.list.selectState("distro");
-  let notes = flux.list.selectState("upgradeNotes", selectedVersion);
+// Local Components
+import DistroIcons from "components/distro-icons";
+import DistroInstall from "components/distro-install";
+
+function Upgrade({
+  selectedVersion = {},
+  showRelease = true,
+  showNotes = true,
+  showIcon = true,
+}) {
+  let distro = flux.list.useState("distro");
+  let edition = flux.list.useState("edition");
+  let auto = flux.list.selectState("shouldAuto");
+  let notes = flux.list.useState("upgradeNotes", selectedVersion);
 
   // Clipboard
   const [open, setOpen] = useState(false);
   const handleClick = () => {
-    // let textPath = upgradePath.map((x) => x.version).join(" => ");
     navigator.clipboard.writeText(version());
     setOpen(true);
   };
@@ -27,11 +35,11 @@ function Upgrade({ selectedVersion = {} }) {
   function version() {
     switch (distro) {
       case "ubuntu":
-        return `apt-get install gitlab-ee=${selectedVersion.version}-ee.0`;
+        return `apt-get install ${auto} gitlab-${edition}=${selectedVersion.version}-${edition}.0`;
       case "centos":
-        return `yum install gitlab-ee=${selectedVersion.version}-ee.0`;
+        return `yum install ${auto} gitlab-${edition}=${selectedVersion.version}-${edition}.0`;
       case "docker":
-        return `docker run gitlab-ee=${selectedVersion.version}-ee.0`;
+        return `docker run gitlab-${edition}=${selectedVersion.version}-${edition}.0`;
       default:
         return "";
     }
@@ -40,8 +48,13 @@ function Upgrade({ selectedVersion = {} }) {
   return (
     <Box sx={style.box}>
       <Box sx={style.installBox}>
-        <DistroIcons distro={distro} />
-        <DistroInstall selectedVersion={selectedVersion} distro={distro} />
+        {showIcon && <DistroIcons distro={distro} />}
+        <DistroInstall
+          selectedVersion={selectedVersion}
+          distro={distro}
+          edition={edition}
+          auto={auto}
+        />
         {selectedVersion.blog}
         <Button
           variant='contained'
@@ -52,7 +65,7 @@ function Upgrade({ selectedVersion = {} }) {
         </Button>
       </Box>
 
-      {notes.blog && (
+      {showRelease && notes.blog && (
         <Box sx={{ padding: 1 }}>
           <Button
             variant='contained'
@@ -65,7 +78,7 @@ function Upgrade({ selectedVersion = {} }) {
         </Box>
       )}
 
-      {notes.notes && (
+      {showNotes && notes.notes && (
         <Box sx={{ flex: 1, padding: 4, bgcolor: "grey.900" }}>
           <ReactMarkdown>{notes.notes}</ReactMarkdown>
         </Box>
