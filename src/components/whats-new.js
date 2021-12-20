@@ -13,7 +13,7 @@ function WhatsNew({ current, target }) {
         startIcon={<FontAwesomeIcon icon={["far", "star"]} size='lg' />}
         variant='contained'
       >
-        <Box sx={style.column}>
+        <Box>
           <span>Whats New</span>
           <span style={style.subtext}>
             {current.display} &gt; {target.display}
@@ -26,4 +26,9 @@ function WhatsNew({ current, target }) {
 
 export default WhatsNew;
 
-const style = {};
+const style = {
+  subtext: {
+    fontSize: 12,
+    marginLeft: 5,
+  },
+};

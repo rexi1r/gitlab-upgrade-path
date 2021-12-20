@@ -72,11 +72,6 @@ const style = {
     margin: 0.5,
   },
 
-  subtext: {
-    fontSize: 12,
-    marginLeft: 5,
-  },
-
   icon: {
     marginTop: 1,
     display: "flex",
