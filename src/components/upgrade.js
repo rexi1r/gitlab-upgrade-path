@@ -9,17 +9,20 @@ import Snackbar from "@mui/material/Snackbar";
 // Local Components
 import DistroIcons from "components/distro-icons";
 import DistroInstall from "components/distro-install";
+import WhatsNew from "components/whats-new";
 
 function Upgrade({
   selectedVersion = {},
   showRelease = true,
   showNotes = true,
   showIcon = true,
+  showNew = true,
 }) {
   let distro = flux.list.useState("distro");
   let edition = flux.list.useState("edition");
   let auto = flux.list.selectState("shouldAuto");
   let notes = flux.list.useState("upgradeNotes", selectedVersion);
+  let previous = flux.list.useState("WhatsNewRelative", selectedVersion);
 
   // Clipboard
   const [open, setOpen] = useState(false);
@@ -78,8 +81,10 @@ function Upgrade({
         </Box>
       )}
 
+      {showNew && <WhatsNew current={previous} target={selectedVersion} />}
+
       {showNotes && notes.notes && (
-        <Box sx={{ flex: 1, padding: 4, bgcolor: "grey.900" }}>
+        <Box sx={{ flex: 1, padding: 4 }}>
           <ReactMarkdown>{notes.notes}</ReactMarkdown>
         </Box>
       )}

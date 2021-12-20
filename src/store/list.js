@@ -1,6 +1,6 @@
 import flux from "@aust/react-flux";
 import VersionList from "util/all";
-import { orderBy, reverse, padStart } from "lodash";
+import { orderBy, reverse, clone, padStart } from "lodash";
 
 const semver = require("semver");
 
@@ -68,6 +68,19 @@ store.addSelector("upgradePath", () => {
   list = reverse(orderBy(list, ["major", "minor"]));
 
   return list.filter((x) => semver.gt(x.version, current.version));
+});
+
+// ========================================================================
+// -- Get Previous Version
+// ========================================================================
+store.addSelector("WhatsNewRelative", (state, version) => {
+  let list = clone(store.selectState("list"));
+
+  // Sorting
+  list = reverse(orderBy(list, ["major", "minor"]));
+  let idx = list.findIndex((x) => version.version === x.version);
+
+  return list[idx + 1];
 });
 
 // ========================================================================

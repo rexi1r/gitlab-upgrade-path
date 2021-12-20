@@ -3,48 +3,36 @@ import flux from "@aust/react-flux";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { reverse, clone } from "lodash";
 
 // Local Components
 import Upgrade from "components/upgrade";
 import DistroIcons from "components/distro-icons";
+import WhatsNew from "components/whats-new";
 
 function Overview({ path }) {
   let current = flux.list.useState("current");
   let target = flux.list.useState("target");
   let distro = flux.list.useState("distro");
 
-  let whatsNewUrl = `https://gitlab-com.gitlab.io/cs-tools/gitlab-cs-tools/what-is-new-since/?tab=features&minVersion=${current.whatsnew}&maxVersion=${target.whatsnew}`;
-
   return (
     <Box sx={style.view}>
       <Box sx={style.links}>
-        <Button
-          sx={style.btn}
-          startIcon={<FontAwesomeIcon icon={["fab", "gitlab"]} size='lg' />}
-          onClick={() =>
-            window.open(
-              "https://docs.gitlab.com/ee/update/#upgrade-paths",
-              "_blank"
-            )
-          }
-          variant='contained'
+        <a
+          href={"https://docs.gitlab.com/ee/update/#upgrade-paths"}
+          target='_blank'
+          rel='noreferrer'
         >
-          Official Upgrade Path Docs
-        </Button>
+          <Button
+            sx={style.btn}
+            startIcon={<FontAwesomeIcon icon={["fab", "gitlab"]} size='lg' />}
+            variant='contained'
+          >
+            Official Upgrade Path Docs
+          </Button>
+        </a>
 
-        <Button
-          sx={style.btn}
-          startIcon={<FontAwesomeIcon icon={["far", "star"]} size='lg' />}
-          onClick={() => window.open(whatsNewUrl, "_blank")}
-          variant='contained'
-        >
-          <Box sx={style.column}>
-            <span>Whats New</span>
-            <span style={style.subtext}>
-              {current.display} &gt; {target.display}
-            </span>
-          </Box>
-        </Button>
+        <WhatsNew current={current} target={target} />
       </Box>
 
       <Box sx={style.versions}>
@@ -52,12 +40,13 @@ function Overview({ path }) {
           <DistroIcons distro={distro} />
         </Box>
         {path &&
-          path.map((version) => (
+          reverse(clone(path)).map((version) => (
             <Upgrade
               key={version.display}
               showRelease={false}
               showNotes={false}
               showIcon={false}
+              showNew={false}
               selectedVersion={version}
             />
           ))}
