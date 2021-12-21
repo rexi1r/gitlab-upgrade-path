@@ -7,9 +7,11 @@ setup:
     - gem install bundler
     - bundle install
     - bundle exe collect_versions.rb
+    - bundle exe release_posts.rb.rb
   artifacts:
     paths:
       - ruby/all.js
+      - ruby/releases.js
     expire_in: 1 day
 
 pages:

@@ -27,8 +27,9 @@ function Overview({ path }) {
             sx={style.btn}
             startIcon={<FontAwesomeIcon icon={["fab", "gitlab"]} size='lg' />}
             variant='contained'
+            color='success'
           >
-            Official Upgrade Path Docs
+            Upgrade Path Docs
           </Button>
         </a>
 
@@ -40,11 +41,11 @@ function Overview({ path }) {
           <DistroIcons distro={distro} />
         </Box>
         {path &&
-          reverse(clone(path)).map((version) => (
+          reverse(clone(path)).map((version, i) => (
             <Upgrade
-              key={version.display}
+              key={i}
               showRelease={false}
-              showNotes={false}
+              showComments={false}
               showIcon={false}
               showNew={false}
               selectedVersion={version}

@@ -10,18 +10,19 @@ import Snackbar from "@mui/material/Snackbar";
 import DistroIcons from "components/distro-icons";
 import DistroInstall from "components/distro-install";
 import WhatsNew from "components/whats-new";
+import ReleaseNotes from "components/release-notes";
 
 function Upgrade({
   selectedVersion = {},
   showRelease = true,
-  showNotes = true,
+  showComments = true,
   showIcon = true,
   showNew = true,
 }) {
   let distro = flux.list.useState("distro");
   let edition = flux.list.useState("edition");
   let auto = flux.list.selectState("shouldAuto");
-  let notes = flux.list.useState("upgradeNotes", selectedVersion);
+  let comments = flux.list.useState("upgradeComments", selectedVersion);
   let previous = flux.list.useState("WhatsNewRelative", selectedVersion);
 
   // Clipboard
@@ -40,7 +41,7 @@ function Upgrade({
       case "ubuntu":
         return `apt-get install ${auto} gitlab-${edition}=${selectedVersion.version}-${edition}.0`;
       case "centos":
-        return `yum install ${auto} gitlab-${edition}=${selectedVersion.version}-${edition}.0`;
+        return `yum update ${auto} gitlab-${edition}-${selectedVersion.version}`;
       case "docker":
         return `docker run gitlab-${edition}=${selectedVersion.version}-${edition}.0`;
       default:
@@ -57,8 +58,8 @@ function Upgrade({
           distro={distro}
           edition={edition}
           auto={auto}
+          install={version()}
         />
-        {selectedVersion.blog}
         <Button
           variant='contained'
           onClick={handleClick}
@@ -68,24 +69,13 @@ function Upgrade({
         </Button>
       </Box>
 
-      {showRelease && notes.blog && (
-        <Box sx={{ padding: 1 }}>
-          <Button
-            variant='contained'
-            color='success'
-            target='_blank'
-            href={notes.blog}
-          >
-            {selectedVersion.major}.{selectedVersion.minor} Release Notes
-          </Button>
-        </Box>
-      )}
+      {showRelease && <ReleaseNotes version={selectedVersion} />}
 
       {showNew && <WhatsNew current={previous} target={selectedVersion} />}
 
-      {showNotes && notes.notes && (
+      {showComments && comments && (
         <Box sx={{ flex: 1, padding: 4 }}>
-          <ReactMarkdown>{notes.notes}</ReactMarkdown>
+          <ReactMarkdown>{comments.comments}</ReactMarkdown>
         </Box>
       )}
 

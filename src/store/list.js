@@ -1,6 +1,7 @@
 import flux from "@aust/react-flux";
 import VersionList from "util/all";
-import { orderBy, reverse, clone, padStart } from "lodash";
+import Releases from "util/releases";
+import { orderBy, reverse, clone } from "lodash";
 
 const semver = require("semver");
 
@@ -10,7 +11,7 @@ function initialSettings() {
     current: null,
     target: null,
     distro: null,
-    notes: [],
+    comments: [],
     auto: false,
     edition: "ee",
   };
@@ -21,22 +22,16 @@ const store = flux.addStore("list", initialSettings());
 // Handle Sys Status Updates
 store.register("version/add", async (dispatch, version) => {
   // Collect latest patch version for each minor
-  let latest = VersionList.find((x) => {
+  let latest = VersionList.index.find((x) => {
     return x.major === version.major && x.minor === version.minor;
   });
-
-  // Add Display Helpers / WhatsNew
-  latest.display = `${latest.major}.${latest.minor}`;
-  let major = `${padStart(latest.major, 2, 0)}`;
-  let minor = `${padStart(latest.minor, 2, 0)}`;
-  latest.whatsnew = `${major}_${minor}`;
 
   let list = store.selectState("list");
   list.push(latest);
 
-  let notes = store.selectState("notes");
-  notes.push(version);
-  await dispatch("list/update", { list: list, notes: notes });
+  let comments = store.selectState("comments");
+  comments.push(version);
+  await dispatch("list/update", { list: list, comments: comments });
 });
 
 // ========================================================================
@@ -44,7 +39,7 @@ store.register("version/add", async (dispatch, version) => {
 // ========================================================================
 store.addSelector("targets", () => {
   let current = store.useState("current");
-  let list = store.selectState("list");
+  let list = VersionList.targets;
 
   if (list) {
     list = reverse(orderBy(list, ["major", "minor"]));
@@ -62,12 +57,23 @@ store.addSelector("targets", () => {
 // ========================================================================
 store.addSelector("upgradePath", () => {
   let current = store.selectState("current");
-  let list = store.selectState("list");
+  let target = store.selectState("target");
+  let list = clone(store.selectState("list"));
 
   // Sorting
   list = reverse(orderBy(list, ["major", "minor"]));
 
-  return list.filter((x) => semver.gt(x.version, current.version));
+  let candidates = list.filter((x) => {
+    return (
+      semver.gt(x.version, current.version) &&
+      semver.lt(x.version, target.version)
+    );
+  });
+
+  // Add Final Target
+  candidates.unshift(target);
+
+  return candidates;
 });
 
 // ========================================================================
@@ -84,12 +90,19 @@ store.addSelector("WhatsNewRelative", (state, version) => {
 });
 
 // ========================================================================
-// -- Collect Notes
+// -- Release Blog
 // ========================================================================
-store.addSelector("upgradeNotes", (state, version) => {
-  let notes = store.selectState("notes");
+store.addSelector("ReleaseBlog", (state, version) => {
+  return Releases[`${version.major}.${version.minor}`];
+});
 
-  return notes.find((x) => {
+// ========================================================================
+// -- Collect Comments
+// ========================================================================
+store.addSelector("upgradeComments", (state, version) => {
+  let comments = store.selectState("comments");
+
+  return comments.find((x) => {
     return x.major === version.major && x.minor === version.minor;
   });
 });

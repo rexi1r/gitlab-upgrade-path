@@ -74,7 +74,7 @@ export default function Start() {
         <Autocomplete
           disablePortal
           defaultValue={current}
-          options={VersionList.slice(1, VersionList.length)}
+          options={VersionList.index.slice(1, VersionList.index.length)}
           sx={style.auto}
           groupBy={(option) => option.major}
           getOptionLabel={(option) => option.version}
