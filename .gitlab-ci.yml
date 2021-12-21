@@ -4,10 +4,9 @@ setup:
 
   script:
     - cd ruby
-    - gem install bundler
     - bundle install
     - bundle exe collect_versions.rb
-    - bundle exe release_posts.rb.rb
+    - bundle exe release_posts.rb
   artifacts:
     paths:
       - ruby/all.js
