@@ -1,4 +1,5 @@
 import flux from "@aust/react-flux";
+import UpgradeNotes from "util/notes";
 
 function initialSettings() {
   return {
@@ -9,17 +10,9 @@ function initialSettings() {
 const store = flux.addStore("notes", initialSettings());
 
 // ========================================================================
-// -- Look for Install Notes
+// -- Look for Upgrade Notes
 // ========================================================================
 store.addSelector("notes", (state, version) => {
-  console.log("install notes", version);
-  return null;
+  let notes = UpgradeNotes[version];
+  return notes;
 });
-
-// ========================================================================
-// -- Store Updates
-// ========================================================================
-store.register("notes/update", async (dispatch, payload) => {
-  return (state) => ({ ...state, ...payload });
-});
-// ========================================================================

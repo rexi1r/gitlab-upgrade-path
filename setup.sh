@@ -2,6 +2,7 @@
 
 cp ruby/all.js src/util
 cp ruby/releases.js src/util
+cp ruby/notes.js src/util
 
 # Helper to remove the need for manual entries
 list='src/util/versions.js'

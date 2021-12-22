@@ -83,10 +83,10 @@ store.addSelector("WhatsNewRelative", (state, version) => {
   let list = clone(store.selectState("list"));
 
   // Sorting
+  list = list.filter((x) => semver.lt(x.version, version.version));
   list = reverse(orderBy(list, ["major", "minor"]));
-  let idx = list.findIndex((x) => version.version === x.version);
 
-  return list[idx + 1];
+  return list[0];
 });
 
 // ========================================================================

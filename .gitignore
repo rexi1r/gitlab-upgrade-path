@@ -25,3 +25,4 @@ yarn-error.log*
 # Collector Output
 ruby/all.js
 ruby/releases.js
+ruby/notes.js

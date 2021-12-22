@@ -48,6 +48,7 @@ function Overview({ path }) {
               showComments={false}
               showIcon={false}
               showNew={false}
+              showUpgrade={false}
               selectedVersion={version}
             />
           ))}

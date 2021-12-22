@@ -11,8 +11,9 @@ import App from "./App";
 
 import "store/sys";
 import "store/list";
-import "util/latest"; // Placeholder for versions
-import "util/versions"; // Placeholder for versions
+import "store/notes";
+import "util/latest"; // Placeholder for Latest Version
+import "util/versions"; // List of all
 
 ReactDOM.render(
   <React.StrictMode>

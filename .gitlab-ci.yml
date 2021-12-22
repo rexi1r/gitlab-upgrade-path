@@ -7,10 +7,12 @@ setup:
     - bundle install
     - bundle exe collect_versions.rb
     - bundle exe release_posts.rb
+    - bundle exe collect_notes.rb
   artifacts:
     paths:
       - ruby/all.js
       - ruby/releases.js
+      - ruby/notes.js
     expire_in: 1 day
 
 pages:

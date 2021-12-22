@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import flux from "@aust/react-flux";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import ReactMarkdown from "react-markdown";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import Snackbar from "@mui/material/Snackbar";
 
@@ -11,6 +10,8 @@ import DistroIcons from "components/distro-icons";
 import DistroInstall from "components/distro-install";
 import WhatsNew from "components/whats-new";
 import ReleaseNotes from "components/release-notes";
+import UpgradeNotes from "components/upgrade-notes";
+import Comments from "components/comments";
 
 function Upgrade({
   selectedVersion = {},
@@ -18,12 +19,11 @@ function Upgrade({
   showComments = true,
   showIcon = true,
   showNew = true,
+  showUpgrade = true,
 }) {
   let distro = flux.list.useState("distro");
   let edition = flux.list.useState("edition");
   let auto = flux.list.selectState("shouldAuto");
-  let comments = flux.list.useState("upgradeComments", selectedVersion);
-  let previous = flux.list.useState("WhatsNewRelative", selectedVersion);
 
   // Clipboard
   const [open, setOpen] = useState(false);
@@ -71,13 +71,16 @@ function Upgrade({
 
       {showRelease && <ReleaseNotes version={selectedVersion} />}
 
-      {showNew && <WhatsNew current={previous} target={selectedVersion} />}
-
-      {showComments && comments && (
-        <Box sx={{ flex: 1, padding: 4 }}>
-          <ReactMarkdown>{comments.comments}</ReactMarkdown>
-        </Box>
+      {showNew && (
+        <WhatsNew
+          current={flux.list.selectState("WhatsNewRelative", selectedVersion)}
+          target={selectedVersion}
+        />
       )}
+
+      {showComments && <Comments version={version} />}
+
+      {showUpgrade && <UpgradeNotes version={selectedVersion} />}
 
       <Snackbar
         open={open}
