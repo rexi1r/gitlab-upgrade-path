@@ -12,7 +12,24 @@ const store = flux.addStore("notes", initialSettings());
 // ========================================================================
 // -- Look for Upgrade Notes
 // ========================================================================
-store.addSelector("notes", (state, version) => {
-  let notes = UpgradeNotes[version];
-  return notes;
+store.addSelector("list", (state, version) => {
+  // Get Relative Previous
+  let previous = flux.list.selectState("WhatsNewRelative", version);
+
+  // Get between Versions
+  let targetList = flux.list.selectState("betweenList", previous, version);
+
+  // Collect Notes
+  let allNotes = targetList.map((x) => {
+    let display = `${x.major}_${x.minor}`;
+
+    if (UpgradeNotes[display]) {
+      return { name: x.version, notes: UpgradeNotes[display] };
+    } else {
+      return null;
+    }
+  });
+
+  // Ignore Empty
+  return allNotes.filter((x) => x && x.notes.length);
 });

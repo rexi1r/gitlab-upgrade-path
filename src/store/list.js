@@ -70,8 +70,34 @@ store.addSelector("upgradePath", () => {
     );
   });
 
+  // Sorting
+  candidates = orderBy(candidates, ["major", "minor"]);
+
   // Add Final Target
-  candidates.unshift(target);
+  candidates.push(target);
+
+  return candidates;
+});
+
+// Between Version Check / All Minor Versions
+store.addSelector("betweenList", (state, current, target) => {
+  let list = VersionList.targets;
+
+  // Sorting
+  list = reverse(orderBy(list, ["major", "minor"]));
+
+  let candidates = list.filter((x) => {
+    return (
+      semver.gt(x.version, current.version) &&
+      semver.lt(x.version, target.version)
+    );
+  });
+
+  // Sorting
+  candidates = orderBy(candidates, ["major", "minor"]);
+
+  // Add Final Target
+  candidates.push(target);
 
   return candidates;
 });

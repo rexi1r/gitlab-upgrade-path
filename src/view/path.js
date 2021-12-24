@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import flux from "@aust/react-flux";
-import { reverse } from "lodash";
-
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
@@ -60,8 +58,8 @@ function Path() {
             </Button>
           </Box>
 
-          {reverse(upgradePath).map((x, i) => (
-            <Box key={x.version} sx={style.versionBox}>
+          {upgradePath.map((x, i) => (
+            <Box key={i} sx={style.versionBox}>
               <Button
                 variant='contained'
                 onClick={() => setSelectedVersion(x)}
@@ -87,7 +85,7 @@ function Path() {
       )}
 
       {selectedVersion && selectedVersion.version === "map" && (
-        <Overview path={reverse(upgradePath)} />
+        <Overview path={upgradePath} />
       )}
 
       <Snackbar

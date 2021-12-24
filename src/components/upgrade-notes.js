@@ -4,20 +4,26 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import ReactMarkdown from "react-markdown";
 
-function UpgradeNotes({ version }) {
-  let notes = flux.notes.selectState(
-    "notes",
-    `${version.major}_${version.minor}`
-  );
-
+function VersionNotes({ name, notes }) {
   return (
-    <Container sx={style.view}>
+    <div>
+      <strong>{name}</strong>
       {notes &&
         notes.map((x, i) => (
           <Box key={i} sx={style.note}>
             <ReactMarkdown children={x} />
           </Box>
         ))}
+    </div>
+  );
+}
+
+function UpgradeNotes({ version }) {
+  let list = flux.notes.selectState("list", version);
+
+  return (
+    <Container sx={style.view}>
+      {list && list.map((x) => <VersionNotes key={x.name} {...x} />)}
     </Container>
   );
 }

@@ -19,7 +19,7 @@ function Upgrade({
   showComments = true,
   showIcon = true,
   showNew = true,
-  showUpgrade = true,
+  showUpgradeNotes = true,
 }) {
   let distro = flux.list.useState("distro");
   let edition = flux.list.useState("edition");
@@ -78,9 +78,9 @@ function Upgrade({
         />
       )}
 
-      {showComments && <Comments version={version} />}
+      {showComments && <Comments version={selectedVersion} />}
 
-      {showUpgrade && <UpgradeNotes version={selectedVersion} />}
+      {showUpgradeNotes && <UpgradeNotes version={selectedVersion} />}
 
       <Snackbar
         open={open}

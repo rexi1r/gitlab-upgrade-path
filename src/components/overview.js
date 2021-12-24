@@ -3,7 +3,6 @@ import flux from "@aust/react-flux";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { reverse, clone } from "lodash";
 
 // Local Components
 import Upgrade from "components/upgrade";
@@ -41,14 +40,14 @@ function Overview({ path }) {
           <DistroIcons distro={distro} />
         </Box>
         {path &&
-          reverse(clone(path)).map((version, i) => (
+          path.map((version, i) => (
             <Upgrade
               key={i}
               showRelease={false}
               showComments={false}
               showIcon={false}
               showNew={false}
-              showUpgrade={false}
+              showUpgradeNotes={false}
               selectedVersion={version}
             />
           ))}
