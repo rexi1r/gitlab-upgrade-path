@@ -60,6 +60,12 @@ store.addSelector("upgradePath", () => {
   let target = store.selectState("target");
   let list = clone(store.selectState("list"));
 
+  // If using no downtime installs minor versions are required
+  let downtime = store.selectState("downtime");
+  if (downtime) {
+    return store.selectState("betweenList", current, target);
+  }
+
   // Sorting
   list = reverse(orderBy(list, ["major", "minor"]));
 

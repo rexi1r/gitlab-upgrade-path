@@ -13,6 +13,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Checkbox from "@mui/material/Checkbox";
+import Tooltip from "@mui/material/Tooltip";
 
 // Local Components
 import VersionList from "util/all";
@@ -31,8 +32,13 @@ export default function Start() {
   const [edition, setEdition] = useState("ee");
   const handleEdition = (event) => setEdition(event.target.value);
 
+  // Auto Install Flag
   const [auto, setAuto] = useState(false);
   const handleAuto = () => setAuto(!auto);
+
+  // No Downtime Flag
+  const [downtime, setDowntime] = useState(false);
+  const handleDowntime = () => setDowntime(!downtime);
 
   let current = flux.list.useState("current"); // Collect Versions
 
@@ -47,6 +53,7 @@ export default function Start() {
       distro: distro,
       edition: edition,
       auto: auto,
+      downtime: downtime,
     });
 
     flux.dispatch("sys/nav", "path");
@@ -157,19 +164,39 @@ export default function Start() {
         </Box>
 
         <Box sx={style.choices}>
-          <FormControl component='fieldset'>
-            <FormLabel component='legend'>Command Options</FormLabel>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  onChange={handleAuto}
-                  checked={auto}
-                  inputProps={{ "aria-label": "controlled" }}
-                />
-              }
-              label='Auto Install'
-            />
-          </FormControl>
+          <Tooltip
+            title='Add -y on install commands'
+            placement='top-start'
+            arrow
+          >
+            <FormControl component='fieldset'>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    onChange={handleAuto}
+                    checked={auto}
+                    inputProps={{ "aria-label": "controlled" }}
+                  />
+                }
+                label='Auto Install'
+              />
+            </FormControl>
+          </Tooltip>
+
+          <Tooltip title='Select all minor versions' arrow>
+            <FormControl component='fieldset'>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    onChange={handleDowntime}
+                    checked={downtime}
+                    inputProps={{ "aria-label": "controlled" }}
+                  />
+                }
+                label='No Downtime'
+              />
+            </FormControl>
+          </Tooltip>
         </Box>
       </Box>
 
@@ -221,6 +248,8 @@ const style = {
   },
 
   choices: {
+    display: "flex",
+    flexDirection: "column",
     marginLeft: 5,
     marginRight: 5,
   },
