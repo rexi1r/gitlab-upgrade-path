@@ -11,6 +11,7 @@ import MapIcon from "@mui/icons-material/Map";
 // Local Components
 import Overview from "components/overview";
 import Upgrade from "components/upgrade";
+import QuickLinks from "components/quick-links";
 
 function Path() {
   let current = flux.list.selectState("current");
@@ -43,6 +44,8 @@ function Path() {
           <ArrowBackIcon />
         </Fab>
       </Box>
+
+      <QuickLinks />
 
       <Box sx={style.versionContainer}>
         <Box sx={style.versionStart}>{current.version}</Box>
