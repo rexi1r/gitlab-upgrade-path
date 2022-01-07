@@ -5,9 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { padStart } from "lodash";
 
 function WhatsNew({ current, target }) {
-  console.log("current", current);
-  console.log("target", target);
-
   function whats(version) {
     let major = `${padStart(version.major, 2, 0)}`;
     let minor = `${padStart(version.minor, 2, 0)}`;
