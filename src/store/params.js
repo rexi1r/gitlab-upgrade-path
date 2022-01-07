@@ -66,7 +66,6 @@ store.register("params/downtime", async (dispatch, payload) => {
 // -- Store Updates
 // ========================================================================
 store.register("params/update", async (dispatch, payload) => {
-  console.log("params update", payload);
   return (state) => ({ ...state, ...payload });
 });
 // ========================================================================

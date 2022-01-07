@@ -107,14 +107,12 @@ store.addSelector("betweenList", (state, current, target) => {
 // -- Get Previous Version
 // ========================================================================
 store.addSelector("WhatsNewRelative", (state, version) => {
-  console.log("WhatsNewRelative - version", version);
   let list = clone(store.selectState("list"));
 
   // Sorting
   list = list.filter((x) => semver.lt(x.version, version.version));
   list = reverse(orderBy(list, ["major", "minor"]));
 
-  console.log("selector", list);
   return list[0];
 });
 
