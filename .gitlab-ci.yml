@@ -1,3 +1,12 @@
+test:
+  stage: test
+  image: node:14.17.6
+  script:
+    - yarn install
+    - yarn build
+  except:
+    - main
+
 setup:
   stage: build
   image: ruby:3.0.3
@@ -14,6 +23,8 @@ setup:
       - ruby/releases.js
       - ruby/notes.js
     expire_in: 1 day
+  only:
+    - main
 
 pages:
   stage: deploy

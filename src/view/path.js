@@ -13,7 +13,7 @@ import Overview from "components/overview";
 import Upgrade from "components/upgrade";
 
 function Path() {
-  let current = flux.list.selectState("current");
+  let current = flux.params.selectState("current");
   let upgradePath = flux.list.selectState("upgradePath");
 
   const mapVersion = { version: "map" };
@@ -170,8 +170,6 @@ const style = {
       output.color = "yellow";
       output.border = 1;
       output.borderColor = "info.dark";
-      //     border: 1,
-      //     borderColor: "info.dark",
     }
 
     return output;

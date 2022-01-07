@@ -11,6 +11,7 @@ import App from "./App";
 
 import "store/sys";
 import "store/list";
+import "store/params";
 import "store/notes";
 import "util/latest"; // Placeholder for Latest Version
 import "util/versions"; // List of all

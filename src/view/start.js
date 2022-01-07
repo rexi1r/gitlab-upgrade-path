@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import flux from "@aust/react-flux";
 import { createFilterOptions } from "@mui/material/Autocomplete";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -25,36 +25,24 @@ const filterOptions = createFilterOptions({
 
 export default function Start() {
   let targets = flux.list.useState("targets"); // Collect Versions
-
-  const [distro, setDistro] = useState("ubuntu");
-  const handleDistro = (event) => setDistro(event.target.value);
-
-  const [edition, setEdition] = useState("ee");
-  const handleEdition = (event) => setEdition(event.target.value);
-
-  // Auto Install Flag
-  const [auto, setAuto] = useState(false);
-  const handleAuto = () => setAuto(!auto);
-
-  // No Downtime Flag
-  const [downtime, setDowntime] = useState(false);
-  const handleDowntime = () => setDowntime(!downtime);
-
-  let current = flux.list.useState("current"); // Collect Versions
-
-  const [target, setTarget] = useState(targets[0]);
+  let distro = flux.params.useState("distro"); // Starting Version
+  let edition = flux.params.useState("edition"); // EE / CE
+  let auto = flux.params.useState("auto"); // -y install flag
+  let downtime = flux.params.useState("downtime"); // Skip minor versions
+  let current = flux.params.useState("current"); // Starting Version
+  let target = flux.params.useState("target"); // Target Version
 
   async function buildPath() {
     if (!current) return false;
 
-    await flux.dispatch("list/update", {
-      current: current,
-      target: target,
-      distro: distro,
-      edition: edition,
-      auto: auto,
-      downtime: downtime,
-    });
+    // await flux.dispatch("list/update", {
+    //   current: current,
+    //   target: target,
+    //   distro: distro,
+    //   edition: edition,
+    //   auto: auto,
+    //   downtime: downtime,
+    // });
 
     flux.dispatch("sys/nav", "path");
   }
@@ -87,26 +75,20 @@ export default function Start() {
           getOptionLabel={(option) => option.version}
           filterOptions={filterOptions}
           renderInput={(params) => <TextField {...params} label='Current' />}
-          onChange={(event, newValue) => {
-            flux.dispatch("list/update", {
-              current: newValue,
-            });
-          }}
+          onChange={(e, v) => flux.dispatch("params/current", v)}
           autoHighlight
         />
 
         <Autocomplete
           disablePortal
           options={targets}
-          defaultValue={targets[0]}
+          defaultValue={target}
           groupBy={(option) => option.major}
           sx={style.auto}
           getOptionLabel={(option) => option.version}
           filterOptions={filterOptions}
           renderInput={(params) => <TextField {...params} label='Target' />}
-          onChange={(event, newValue) => {
-            setTarget(newValue);
-          }}
+          onChange={(e, v) => flux.dispatch("params/target", v)}
           autoHighlight
         />
       </Box>
@@ -117,9 +99,9 @@ export default function Start() {
             <FormLabel component='legend'>Edition</FormLabel>
             <RadioGroup
               aria-label='edition'
-              defaultValue='ee'
+              defaultValue={edition}
               name='radio-buttons-group'
-              onChange={handleEdition}
+              onChange={(e) => flux.dispatch("params/edition", e)}
             >
               <FormControlLabel
                 value='ee'
@@ -140,9 +122,9 @@ export default function Start() {
             <FormLabel component='legend'>Distro</FormLabel>
             <RadioGroup
               aria-label='distro'
-              defaultValue='ubuntu'
+              defaultValue={distro}
               name='radio-buttons-group'
-              onChange={handleDistro}
+              onChange={(e) => flux.dispatch("params/distro", e)}
             >
               <FormControlLabel
                 value='ubuntu'
@@ -173,7 +155,7 @@ export default function Start() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    onChange={handleAuto}
+                    onChange={(e) => flux.dispatch("params/auto", !auto)}
                     checked={auto}
                     inputProps={{ "aria-label": "controlled" }}
                   />
@@ -188,7 +170,9 @@ export default function Start() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    onChange={handleDowntime}
+                    onChange={(e) =>
+                      flux.dispatch("params/downtime", !downtime)
+                    }
                     checked={downtime}
                     inputProps={{ "aria-label": "controlled" }}
                   />
