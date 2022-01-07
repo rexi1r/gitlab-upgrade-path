@@ -13,7 +13,7 @@ library.add(fas, fab, far);
 
 function App() {
   useEffect(() => {
-    flux.dispatch("sys/nav", "start");
+    flux.dispatch("params/init");
   }, []);
 
   return <Nav />;

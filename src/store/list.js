@@ -8,12 +8,7 @@ const semver = require("semver");
 function initialSettings() {
   return {
     list: [],
-    current: null,
-    target: null,
-    distro: null,
     comments: [],
-    auto: false,
-    edition: "ee",
   };
 }
 
@@ -56,12 +51,12 @@ store.addSelector("targets", () => {
 // -- Calculate Path
 // ========================================================================
 store.addSelector("upgradePath", () => {
-  let current = store.selectState("current");
-  let target = store.selectState("target");
+  let current = flux.params.selectState("current");
+  let target = flux.params.selectState("target");
   let list = clone(store.selectState("list"));
 
   // If using no downtime installs minor versions are required
-  let downtime = store.selectState("downtime");
+  let downtime = flux.params.selectState("downtime");
   if (downtime) {
     return store.selectState("betweenList", current, target);
   }
@@ -112,12 +107,14 @@ store.addSelector("betweenList", (state, current, target) => {
 // -- Get Previous Version
 // ========================================================================
 store.addSelector("WhatsNewRelative", (state, version) => {
+  console.log("WhatsNewRelative - version", version);
   let list = clone(store.selectState("list"));
 
   // Sorting
   list = list.filter((x) => semver.lt(x.version, version.version));
   list = reverse(orderBy(list, ["major", "minor"]));
 
+  console.log("selector", list);
   return list[0];
 });
 
@@ -140,17 +137,12 @@ store.addSelector("upgradeComments", (state, version) => {
 });
 
 // ========================================================================
-// -- Auto Install
+// -- Version Idx
 // ========================================================================
-store.addSelector("shouldAuto", () => {
-  let auto = store.selectState("auto");
-
-  if (auto) {
-    return "-y";
-  } else {
-    return "";
-  }
+store.addSelector("idx", async (state, version) => {
+  return VersionList.index.find((x) => x.version === version);
 });
+// ========================================================================
 
 // ========================================================================
 // -- Store Updates

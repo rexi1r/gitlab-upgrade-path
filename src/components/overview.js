@@ -10,9 +10,9 @@ import DistroIcons from "components/distro-icons";
 import WhatsNew from "components/whats-new";
 
 function Overview({ path }) {
-  let current = flux.list.useState("current");
-  let target = flux.list.useState("target");
-  let distro = flux.list.useState("distro");
+  let current = flux.params.useState("current");
+  let target = flux.params.useState("target");
+  let distro = flux.params.useState("distro");
 
   return (
     <Box sx={style.view}>

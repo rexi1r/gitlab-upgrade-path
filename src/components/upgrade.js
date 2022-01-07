@@ -21,9 +21,11 @@ function Upgrade({
   showNew = true,
   showUpgradeNotes = true,
 }) {
-  let distro = flux.list.useState("distro");
-  let edition = flux.list.useState("edition");
-  let auto = flux.list.selectState("shouldAuto");
+  let distro = flux.params.useState("distro");
+  let edition = flux.params.useState("edition");
+  let auto = flux.params.selectState("shouldAuto");
+
+  console.log("selectedVersion", selectedVersion);
 
   // Clipboard
   const [open, setOpen] = useState(false);

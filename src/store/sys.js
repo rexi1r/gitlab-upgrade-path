@@ -8,12 +8,6 @@ function initialSettings() {
 
 const store = flux.addStore("sys", initialSettings());
 
-// Entry point
-store.register("sys/init", async (dispatch) => {
-  // TODO - Support URL Encoded Params
-  console.log("init");
-});
-
 // Navigation Updates
 store.register("sys/nav", async (dispatch, location) => {
   await dispatch("sys/update", { status: location });
