@@ -14,9 +14,9 @@ setup:
   script:
     - cd ruby
     - bundle install
-    - bundle exe collect_versions.rb
-    - bundle exe release_posts.rb
-    - bundle exe collect_notes.rb
+    - bundle exec collect_versions.rb
+    - bundle exec release_posts.rb
+    - bundle exec collect_notes.rb
   artifacts:
     paths:
       - ruby/all.js
