@@ -8,13 +8,7 @@ import Link from "@mui/material/Link";
 
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
-import InboxIcon from "@mui/icons-material/Inbox";
-import DraftsIcon from "@mui/icons-material/Drafts";
-import CloseIcon from "@mui/icons-material/Close";
 
 function EzLink({ url = "", text = "" }) {
   return (
@@ -43,6 +37,12 @@ function QuickLinks() {
         <div style={style.header}>Reference</div>
 
         <List>
+          <ListItem>
+            <EzLink
+              url='https://docs.gitlab.com/ee/update/index.html#upgrade-paths'
+              text='Upgrade Path'
+            />
+          </ListItem>
           <ListItem>
             <EzLink
               url='https://docs.gitlab.com/ee/update/package'
@@ -86,8 +86,6 @@ function QuickLinks() {
               </small>
             </Box>
           </ListItem>
-
-          <ListItem>rawr</ListItem>
         </List>
       </Drawer>
     </div>
