@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import Snackbar from "@mui/material/Snackbar";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // Local Components
 import DistroIcons from "components/distro-icons";
