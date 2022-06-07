@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Upgrade from "components/upgrade";
 import DistroIcons from "components/distro-icons";
 import WhatsNew from "components/whats-new";
+import CheckMigrations from "components/check-migrations";
 
 function Overview({ path }) {
   let current = flux.params.useState("current");
@@ -16,7 +17,7 @@ function Overview({ path }) {
 
   return (
     <Box sx={style.view}>
-      <Box sx={style.links}>
+      <Box>
         <a
           href={"https://docs.gitlab.com/ee/update/#upgrade-paths"}
           target='_blank'
@@ -35,6 +36,10 @@ function Overview({ path }) {
         <WhatsNew current={current} target={target} />
       </Box>
 
+      <Box sx={{ margin: 1 }}>
+        <CheckMigrations />
+      </Box>
+
       <Box sx={style.versions}>
         <Box sx={style.icon}>
           <DistroIcons distro={distro} />
@@ -47,6 +52,7 @@ function Overview({ path }) {
               showComments={false}
               showIcon={false}
               showNew={false}
+              showCheckMigrations={false}
               showUpgradeNotes={false}
               selectedVersion={version}
             />

@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import Snackbar from "@mui/material/Snackbar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 // Local Components
 import DistroIcons from "components/distro-icons";
@@ -12,6 +13,7 @@ import WhatsNew from "components/whats-new";
 import ReleaseNotes from "components/release-notes";
 import UpgradeNotes from "components/upgrade-notes";
 import Comments from "components/comments";
+import CheckMigrations from "./check-migrations";
 
 function Upgrade({
   selectedVersion = {},
@@ -20,6 +22,7 @@ function Upgrade({
   showIcon = true,
   showNew = true,
   showUpgradeNotes = true,
+  showCheckMigrations = true,
 }) {
   let distro = flux.params.useState("distro");
   let edition = flux.params.useState("edition");
@@ -32,7 +35,7 @@ function Upgrade({
     setOpen(true);
   };
 
-  const handleClose = (event, reason) => {
+  const handleClose = () => {
     setOpen(false);
   };
 
@@ -69,14 +72,18 @@ function Upgrade({
         </Button>
       </Box>
 
-      {showRelease && <ReleaseNotes version={selectedVersion} />}
+      <Box>
+        {showRelease && <ReleaseNotes version={selectedVersion} />}
 
-      {showNew && (
-        <WhatsNew
-          current={flux.list.selectState("WhatsNewRelative", selectedVersion)}
-          target={selectedVersion}
-        />
-      )}
+        {showNew && (
+          <WhatsNew
+            current={flux.list.selectState("WhatsNewRelative", selectedVersion)}
+            target={selectedVersion}
+          />
+        )}
+      </Box>
+
+      {showCheckMigrations && <CheckMigrations />}
 
       {showComments && <Comments version={selectedVersion} />}
 
