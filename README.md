@@ -8,15 +8,24 @@ Generate supported upgrade paths to assist with updating GitLab.
 
 Whenever a new release requires a minor version it current will need a manually modification.
 
-## Version Files
+Upgrade path is generate from the `upgrade-path.yml` in the root of the project.
 
-1. Duplicate/create a new version file in `src/versions`
-2. Update Major, Minor, and Blog release
+## Update Upgrade Path
 
-Example version [file](https://gitlab.com/gitlab-com/support/toolbox/upgrade-path/-/blob/main/src/versions/14_0.js)
+1. Edit the `upgrade-path.yml`
+2. Add new entry
+
+- major/minor
+- optional `comments:`
+
+Example:
+
+```
+- major: 12
+  minor: 10
+  comments: "**Migrations can take a long time!**"
+```
 
 ## Merge Request
 
 1. Open a new merge request cc/assign @davinwalker
-
-Great Example [merge request](https://gitlab.com/gitlab-com/support/toolbox/upgrade-path/-/merge_requests/3)

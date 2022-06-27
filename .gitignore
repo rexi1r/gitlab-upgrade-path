@@ -26,3 +26,4 @@ yarn-error.log*
 ruby/all.js
 ruby/releases.js
 ruby/notes.js
+ruby/versions.js
