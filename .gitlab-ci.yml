@@ -17,6 +17,7 @@ setup:
     - bundle exec collect_versions.rb
     - bundle exec release_posts.rb
     - bundle exec collect_notes.rb
+    - bundle exec generate-supported-path.rb
   artifacts:
     paths:
       - ruby/all.js
