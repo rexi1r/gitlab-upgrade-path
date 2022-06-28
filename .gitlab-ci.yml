@@ -23,6 +23,7 @@ setup:
       - ruby/all.js
       - ruby/releases.js
       - ruby/notes.js
+      - ruby/versions.js
     expire_in: 1 day
   only:
     - main
