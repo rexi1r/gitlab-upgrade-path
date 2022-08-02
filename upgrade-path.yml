@@ -1,4 +1,22 @@
 ---
+- major: 8
+  minor: 11
+
+- major: 8
+  minor: 12
+
+- major: 8
+  minor: 17
+
+- major: 9
+  minor: 5
+
+- major: 10
+  minor: 8
+
+- major: 11
+  minor: 11
+
 - major: 12
   minor: 0
 
