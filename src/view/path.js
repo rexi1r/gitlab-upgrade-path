@@ -6,7 +6,8 @@ import Snackbar from "@mui/material/Snackbar";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Fab from "@mui/material/Fab";
-import MapIcon from "@mui/icons-material/Map";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 // Local Components
 import Overview from "components/overview";
@@ -32,6 +33,27 @@ function Path() {
     setOpen(false);
   };
 
+  const breadcrumbs = [
+    <Button
+      variant='contained'
+      sx={style.version("map" === selectedVersion.version)}
+      onClick={() => setSelectedVersion(mapVersion)}
+    >
+      Summary
+    </Button>,
+    upgradePath.map((x, i) => (
+      <Box key={i} sx={style.versionBox}>
+        <Button
+          variant='contained'
+          onClick={() => setSelectedVersion(x)}
+          sx={style.version(x.version === selectedVersion.version)}
+        >
+          {x.version}
+        </Button>
+      </Box>
+    )),
+  ];
+
   return (
     <Box sx={style.view}>
       <Box sx={style.fab}>
@@ -51,27 +73,12 @@ function Path() {
         <Box sx={style.versionStart}>{current.version}</Box>
 
         <Box sx={style.versionList}>
-          <Box sx={style.versionBox}>
-            <Button
-              variant='contained'
-              sx={style.version("map" === selectedVersion.version)}
-              onClick={() => setSelectedVersion(mapVersion)}
-            >
-              <MapIcon sx={{ fontSize: 35 }} />
-            </Button>
-          </Box>
-
-          {upgradePath.map((x, i) => (
-            <Box key={i} sx={style.versionBox}>
-              <Button
-                variant='contained'
-                onClick={() => setSelectedVersion(x)}
-                sx={style.version(x.version === selectedVersion.version)}
-              >
-                {x.version}
-              </Button>
-            </Box>
-          ))}
+          <Breadcrumbs
+            separator={<NavigateNextIcon fontSize='small' />}
+            aria-label='breadcrumb'
+          >
+            {breadcrumbs}
+          </Breadcrumbs>
         </Box>
 
         <Button
@@ -167,6 +174,7 @@ const style = {
       color: "white",
       bgcolor: "grey.900",
       minWidth: 100,
+      textTransform: "none",
     };
 
     if (highlight) {

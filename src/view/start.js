@@ -177,7 +177,7 @@ export default function Start() {
                     inputProps={{ "aria-label": "controlled" }}
                   />
                 }
-                label='No Downtime'
+                label='Zero downtime'
               />
             </FormControl>
           </Tooltip>

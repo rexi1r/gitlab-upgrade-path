@@ -9,6 +9,8 @@ import Upgrade from "components/upgrade";
 import DistroIcons from "components/distro-icons";
 import WhatsNew from "components/whats-new";
 import CheckMigrations from "components/check-migrations";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 
 function Overview({ path }) {
   let current = flux.params.useState("current");
@@ -17,6 +19,13 @@ function Overview({ path }) {
 
   return (
     <Box sx={style.view}>
+      <Alert severity='info' sx={{ marginBottom: 1 }}>
+        <AlertTitle sx={{ textAlign: "center" }}>
+          This the supported upgrade path overview
+        </AlertTitle>
+        Review each step and the version specific upgrade notes
+      </Alert>
+
       <Box>
         <a
           href={"https://docs.gitlab.com/ee/update/#upgrade-paths"}
@@ -35,11 +44,9 @@ function Overview({ path }) {
 
         <WhatsNew current={current} target={target} />
       </Box>
-
       <Box sx={{ margin: 1 }}>
         <CheckMigrations />
       </Box>
-
       <Box sx={style.versions}>
         <Box sx={style.icon}>
           <DistroIcons distro={distro} />
