@@ -21,7 +21,7 @@ function Overview({ path }) {
     <Box sx={style.view}>
       <Alert severity='info' sx={{ marginBottom: 1 }}>
         <AlertTitle sx={{ textAlign: "center" }}>
-          This the supported upgrade path overview
+          This is the supported upgrade path overview
         </AlertTitle>
         Review each step and the version specific upgrade notes
       </Alert>
