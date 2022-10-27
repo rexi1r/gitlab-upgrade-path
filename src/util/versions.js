@@ -1,5 +1,11 @@
 import flux from "@aust/react-flux";
 
+flux.dispatch('version/add',{"major":8,"minor":11})
+flux.dispatch('version/add',{"major":8,"minor":12})
+flux.dispatch('version/add',{"major":8,"minor":17})
+flux.dispatch('version/add',{"major":9,"minor":5})
+flux.dispatch('version/add',{"major":10,"minor":8})
+flux.dispatch('version/add',{"major":11,"minor":11})
 flux.dispatch('version/add',{"major":12,"minor":0})
 flux.dispatch('version/add',{"major":12,"minor":1})
 flux.dispatch('version/add',{"major":12,"minor":10})
@@ -11,4 +17,5 @@ flux.dispatch('version/add',{"major":14,"minor":0,"comments":"**Migrations can t
 flux.dispatch('version/add',{"major":14,"minor":3,"comments":"See [GitLab Issue #354211](https://gitlab.com/gitlab-org/gitlab/-/issues/354211#note_962223568)"})
 flux.dispatch('version/add',{"major":14,"minor":9,"comments":"See [GitLab Issue #354211](https://gitlab.com/gitlab-org/gitlab/-/issues/354211#note_962223568)"})
 flux.dispatch('version/add',{"major":14,"minor":10})
-flux.dispatch('version/add',{"major":15,"minor":0})
+flux.dispatch('version/add',{"major":15,"minor":0,"comments":"If you have multiple [web/rails nodes](https://docs.gitlab.com/ee/administration/reference_architectures/2k_users.html) upgrade to 15.1 first. See [15.2.0 Upgrade Notes](https://docs.gitlab.com/ee/update/#1520)"})
+flux.dispatch('version/add',{"major":15,"minor":4,"comments":"If you have multiple [web/rails nodes](https://docs.gitlab.com/ee/administration/reference_architectures/2k_users.html) upgrade to 15.1 first. See [15.2.0 Upgrade Notes](https://docs.gitlab.com/ee/update/#1520)"})

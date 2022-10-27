@@ -55,6 +55,8 @@
 
 - major: 15
   minor: 0
+  comments: If you have multiple [web/rails nodes](https://docs.gitlab.com/ee/administration/reference_architectures/2k_users.html) upgrade to 15.1 first. See [15.2.0 Upgrade Notes](https://docs.gitlab.com/ee/update/#1520)
 
 - major: 15
   minor: 4
+  comments: If you have multiple [web/rails nodes](https://docs.gitlab.com/ee/administration/reference_architectures/2k_users.html) upgrade to 15.1 first. See [15.2.0 Upgrade Notes](https://docs.gitlab.com/ee/update/#1520)
