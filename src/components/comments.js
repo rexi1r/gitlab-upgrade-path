@@ -9,7 +9,14 @@ function Comments({ version }) {
   if (!comments) return false;
 
   return (
-    <Box sx={{ padding: 1 }}>
+    <Box
+      sx={{
+        paddingLeft: 2,
+        paddingRight: 2,
+        borderRadius: "0.2rem",
+        backgroundColor: "rgb(7, 19, 24)",
+      }}
+    >
       <ReactMarkdown>{comments.comments}</ReactMarkdown>
     </Box>
   );

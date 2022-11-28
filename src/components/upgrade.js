@@ -53,6 +53,8 @@ function Upgrade({
 
   return (
     <Box sx={style.box}>
+      {showComments && <Comments version={selectedVersion} />}
+
       <Box sx={style.installBox}>
         {showIcon && <DistroIcons distro={distro} />}
         <DistroInstall
@@ -83,8 +85,6 @@ function Upgrade({
       </Box>
 
       {showCheckMigrations && <CheckMigrations />}
-
-      {showComments && <Comments version={selectedVersion} />}
 
       {showUpgradeNotes && <UpgradeNotes version={selectedVersion} />}
 
