@@ -6,7 +6,7 @@ function CheckMigrations() {
   return (
     <a
       href={
-        "https://docs.gitlab.com/ee/update/index.html#checking-for-background-migrations-before-upgrading"
+        "https://docs.gitlab.com/ee/update/index.html#check-for-background-migrations-before-upgrading"
       }
       target='_blank'
       rel='noreferrer'
