@@ -63,4 +63,4 @@
 
 - major: 15
   minor: 6
-  comments: There is a [database migration bug in GitLab 15.9.x](https://docs.gitlab.com/ee/update/#user-profile-data-loss-bug-in-159x) that can cause data to be lost from the user profile fields. This bug affects all currently available 15.9.x releases. Until a bug fix is released, you should upgrade via 15.6.x, 15.7.x, or 15.8.x.
+  comments: There is a [database migration bug in GitLab 15.9.x](https://docs.gitlab.com/ee/update/#user-profile-data-loss-bug-in-159x) that can cause data to be lost from the user profile fields. This bug affects all currently available 15.9.x releases. Until a bug fix is released, you should upgrade to 15.6.x, 15.7.x, or 15.8.x first.
