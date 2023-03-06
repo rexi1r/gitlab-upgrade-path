@@ -134,7 +134,7 @@ export default function Start() {
               <FormControlLabel
                 value='centos'
                 control={<Radio />}
-                label='Centos'
+                label='CentOS'
               />
               <FormControlLabel
                 value='docker'
