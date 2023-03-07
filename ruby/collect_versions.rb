@@ -50,5 +50,8 @@ output = {
   targets: targets.values
 }
 
+# Helper for raw path
+File.write('index.json', index.to_json)
+
 # src/util/all
 File.write('all.js', "const versions = #{output.to_json}\nexport default versions;")
