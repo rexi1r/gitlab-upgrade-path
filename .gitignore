@@ -27,3 +27,5 @@ ruby/all.js
 ruby/releases.js
 ruby/notes.js
 ruby/versions.js
+ruby/index.json
+ruby/path.json

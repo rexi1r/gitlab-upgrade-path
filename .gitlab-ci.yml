@@ -17,13 +17,15 @@ setup:
     - bundle exec collect_versions.rb
     - bundle exec release_posts.rb
     - bundle exec collect_notes.rb
-    - bundle exec generate-supported-path.rb
+    - bundle exec generate_supported_path.rb
+    - bundle exec create_json_upgrade_path.rb
   artifacts:
     paths:
       - ruby/all.js
       - ruby/releases.js
       - ruby/notes.js
       - ruby/versions.js
+      - ruby/path.json
     expire_in: 1 day
   only:
     - main
