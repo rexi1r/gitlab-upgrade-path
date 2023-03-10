@@ -29,3 +29,15 @@ Example:
 ## Merge Request
 
 1. Open a new merge request cc/assign @davinwalker
+
+## Testing
+
+1. With [asdf](https://asdf-vm.com/) installed, run `scripts/bootstrap.sh`.
+1. Run `make` to build.
+1. Run a local Web server:
+
+    ```shell
+    ruby -run -e httpd build -p 8000
+    ```
+
+1. Visit [http://localhost:8000](http://localhost:8000).
