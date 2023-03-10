@@ -9,9 +9,9 @@ test:
 
 setup:
   stage: build
-  image: ruby:3.0.5
-
+  image: ruby:$RUBY_VERSION
   script:
+    - bundle config set --local path vendor
     - make data
   artifacts:
     paths:
@@ -21,6 +21,13 @@ setup:
       - ruby/versions.js
       - ruby/path.json
     expire_in: 1 day
+  cache:
+    key: "ruby-$RUBY_CACHE_KEY"
+    paths:
+      - ruby/vendor
+  variables:
+    RUBY_VERSION: "3.0.5"
+    RUBY_CACHE_KEY: "3.0"
   only:
     - main
 
