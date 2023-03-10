@@ -9,16 +9,10 @@ test:
 
 setup:
   stage: build
-  image: ruby:3.0.3
+  image: ruby:3.0.5
 
   script:
-    - cd ruby
-    - bundle install
-    - bundle exec collect_versions.rb
-    - bundle exec release_posts.rb
-    - bundle exec collect_notes.rb
-    - bundle exec generate_supported_path.rb
-    - bundle exec create_json_upgrade_path.rb
+    - make data
   artifacts:
     paths:
       - ruby/all.js
@@ -35,9 +29,7 @@ pages:
   image: node:14.17.6
 
   script:
-    - ./setup.sh
-    - yarn install
-    - yarn build
+    - make web
     - mv public old
     - mv build public
   artifacts:
