@@ -14,6 +14,7 @@ $(GENERATED_FILES): upgrade-path.yml
 
 .PHONY: web
 web: $(GENERATED_FILES)
+	@./setup.sh
 	. ./scripts/build_helpers.sh && generate_web
 
 .PHONY: clean
