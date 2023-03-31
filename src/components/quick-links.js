@@ -52,8 +52,8 @@ function QuickLinks() {
 
           <ListItem>
             <EzLink
-              url='https://docs.gitlab.com/ee/update/index.html#checking-for-background-migrations-before-upgrading'
-              text='Database Migrations'
+              url='https://docs.gitlab.com/ee/update/background_migrations.html'
+              text='Background Migrations'
             />
           </ListItem>
 
@@ -68,7 +68,7 @@ function QuickLinks() {
                     Gitlab::BackgroundMigration.remaining'
                     <br /> <br />
                     sudo gitlab-rails runner -e production 'puts
-                    Gitlab::BackgroundMigration.pending'
+                    Gitlab::Database::BackgroundMigration::BatchedMigration.queued.count'
                   </code>
                 </pre>
               </small>
