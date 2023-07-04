@@ -34,8 +34,6 @@ export default function Start() {
   let target = flux.params.useState("target"); // Target Version
   let n1 = flux.params.useState("n1"); // Adjust Target Version
 
-  console.log("target", target);
-
   async function buildPath() {
     if (!current) return false;
 

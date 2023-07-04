@@ -132,6 +132,7 @@ store.register("params/readQuery", async (dispatch) => {
   let downtime = queryParams.get("downtime");
   let n1 = queryParams.get("n1");
 
+  if (target) params.target = target;
   if (auto) params.auto = JSON.parse(auto);
   if (downtime) params.downtime = JSON.parse(downtime);
   if (distro) params.distro = distro;
