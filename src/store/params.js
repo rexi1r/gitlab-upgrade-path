@@ -63,9 +63,7 @@ store.register("params/downtime", async (dispatch, payload) => {
 });
 
 store.register("params/n1", async (dispatch, payload) => {
-  if (payload == "true" || payload) {
-    console.log("N! BABBBBY");
-
+  if (payload === "true" || payload) {
     await dispatch("params/update", { target: VersionList.targets[1] });
   }
 
