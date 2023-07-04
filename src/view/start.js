@@ -14,6 +14,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Checkbox from "@mui/material/Checkbox";
 import Tooltip from "@mui/material/Tooltip";
+import Alert from "@mui/material/Alert";
 
 // Local Components
 import VersionList from "util/all";
@@ -31,6 +32,9 @@ export default function Start() {
   let downtime = flux.params.useState("downtime"); // Skip minor versions
   let current = flux.params.useState("current"); // Starting Version
   let target = flux.params.useState("target"); // Target Version
+  let n1 = flux.params.useState("n1"); // Adjust Target Version
+
+  console.log("target", target);
 
   async function buildPath() {
     if (!current) return false;
@@ -81,6 +85,7 @@ export default function Start() {
 
         <Autocomplete
           disablePortal
+          disabled={n1 === "true" || n1}
           options={targets}
           defaultValue={target}
           groupBy={(option) => option.major}
@@ -156,7 +161,7 @@ export default function Start() {
                 control={
                   <Checkbox
                     onChange={(e) => flux.dispatch("params/auto", !auto)}
-                    checked={auto}
+                    checked={auto === "true" || auto}
                     inputProps={{ "aria-label": "controlled" }}
                   />
                 }
@@ -173,11 +178,26 @@ export default function Start() {
                     onChange={(e) =>
                       flux.dispatch("params/downtime", !downtime)
                     }
-                    checked={downtime}
+                    checked={downtime === "true" || downtime}
                     inputProps={{ "aria-label": "controlled" }}
                   />
                 }
                 label='Zero downtime'
+              />
+            </FormControl>
+          </Tooltip>
+
+          <Tooltip title='Assume second to last is latest release' arrow>
+            <FormControl component='fieldset'>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    onChange={(e) => flux.dispatch("params/n1", !n1)}
+                    checked={n1 === "true" || n1}
+                    inputProps={{ "aria-label": "controlled" }}
+                  />
+                }
+                label='N-1'
               />
             </FormControl>
           </Tooltip>
@@ -195,6 +215,15 @@ export default function Start() {
           Go!
         </Button>
       </Box>
+
+      <Box sx={style.comment}>
+        <Box sx={style.autoBox}>
+          <Alert severity='info' sx={{ marginBottom: 1 }}>
+            This assumes a default conservative approach. You may not need every
+            step.
+          </Alert>
+        </Box>
+      </Box>
     </Box>
   );
 }
@@ -206,6 +235,13 @@ const style = {
     alignItems: "stretch",
     justifyContent: "center",
     height: "100vh",
+  },
+
+  comment: {
+    position: "fixed",
+    bottom: 0,
+    left: 0,
+    width: "100vw",
   },
 
   autoBox: {

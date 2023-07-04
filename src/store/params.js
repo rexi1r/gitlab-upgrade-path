@@ -10,6 +10,7 @@ function initialSettings() {
     auto: false,
     edition: "ee",
     downtime: false,
+    n1: false,
   };
 }
 
@@ -60,6 +61,17 @@ store.register("params/downtime", async (dispatch, payload) => {
   await dispatch("params/update", { downtime: payload });
   dispatch("params/setQuery");
 });
+
+store.register("params/n1", async (dispatch, payload) => {
+  if (payload == "true" || payload) {
+    console.log("N! BABBBBY");
+
+    await dispatch("params/update", { target: VersionList.targets[1] });
+  }
+
+  await dispatch("params/update", { n1: payload });
+  dispatch("params/setQuery");
+});
 // ========================================================================
 
 // ========================================================================
@@ -80,7 +92,7 @@ store.register("params/setQuery", async () => {
   var queryParams = new URLSearchParams();
 
   if (params.current) queryParams.set("current", params.current.version);
-  if (params.target && VersionList.targets[0] !== params.target)
+  if (params.target && VersionList.targets[0] !== params.target && !params.n1)
     queryParams.set("target", params.target.version);
 
   // Ignore Defaults
@@ -88,6 +100,7 @@ store.register("params/setQuery", async () => {
   if (params.auto) queryParams.set("auto", params.auto);
   if (params.edition !== "ee") queryParams.set("edition", params.edition);
   if (params.downtime) queryParams.set("downtime", params.downtime);
+  if (params.n1) queryParams.set("n1", params.n1);
 
   // Set new or modify existing parameter value.
 
@@ -119,13 +132,14 @@ store.register("params/readQuery", async (dispatch) => {
   let auto = queryParams.get("auto");
   let edition = queryParams.get("edition");
   let downtime = queryParams.get("downtime");
+  let n1 = queryParams.get("n1");
 
   if (auto) params.auto = JSON.parse(auto);
   if (downtime) params.downtime = JSON.parse(downtime);
   if (distro) params.distro = distro;
   if (edition) params.edition = edition;
   if (current) params.current = current;
-  if (target) params.target = target;
+  if (n1) params.n1 = n1;
 
   await flux.dispatch("params/update", params);
 });
