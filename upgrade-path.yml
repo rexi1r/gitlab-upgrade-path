@@ -65,5 +65,5 @@
   minor: 11
 
 - major: 16
-  minor: 1
+  minor: 2
   comments: 16.0 not required as a upgrade path stop see [#412696](https://gitlab.com/gitlab-org/gitlab/-/issues/412696)
