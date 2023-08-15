@@ -35,6 +35,7 @@ function Path() {
 
   const breadcrumbs = [
     <Button
+      key='breadcrumb'
       variant='contained'
       sx={style.version("map" === selectedVersion.version)}
       onClick={() => setSelectedVersion(mapVersion)}
