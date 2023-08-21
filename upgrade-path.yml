@@ -66,4 +66,4 @@
 
 - major: 16
   minor: 2
-  comments: 16.0 not required as a upgrade path stop see [#412696](https://gitlab.com/gitlab-org/gitlab/-/issues/412696)
+  comments: 16.0 is a required upgrade step for [instances with 30k Users](https://docs.gitlab.com/ee/update/versions/gitlab_16_changes.html#long-running-user-type-data-change)

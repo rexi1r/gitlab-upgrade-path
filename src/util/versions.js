@@ -19,3 +19,5 @@ flux.dispatch('version/add',{"major":14,"minor":9,"comments":"See [GitLab Issue 
 flux.dispatch('version/add',{"major":14,"minor":10})
 flux.dispatch('version/add',{"major":15,"minor":0,"comments":"If you have multiple [web/rails nodes](https://docs.gitlab.com/ee/administration/reference_architectures/2k_users.html) 15.1 is an additional required step. See [15.2.0 Upgrade Notes](https://docs.gitlab.com/ee/update/#1520)"})
 flux.dispatch('version/add',{"major":15,"minor":4,"comments":"If you have multiple [web/rails nodes](https://docs.gitlab.com/ee/administration/reference_architectures/2k_users.html) upgrade to 15.1 first. See [15.2.0 Upgrade Notes](https://docs.gitlab.com/ee/update/#1520)"})
+flux.dispatch('version/add',{"major":15,"minor":11})
+flux.dispatch('version/add',{"major":16,"minor":2,"comments":"16.0 is a required upgrade step for [instances with 30k Users](https://docs.gitlab.com/ee/update/versions/gitlab_16_changes.html#long-running-user-type-data-change)"})

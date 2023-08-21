@@ -24,8 +24,10 @@ store.register("version/add", async (dispatch, version) => {
   let list = store.selectState("list");
   list.push(latest);
 
+  // Only Append Comments if exists
   let comments = store.selectState("comments");
-  comments.push(version);
+  if (version.comments) comments.push(version);
+
   await dispatch("list/update", { list: list, comments: comments });
 });
 
