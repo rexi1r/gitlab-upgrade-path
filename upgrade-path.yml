@@ -65,5 +65,5 @@
   minor: 11
 
 - major: 16
-  minor: 2
+  minor: 3
   comments: 16.0 is a required upgrade step for [instances with 30k Users](https://docs.gitlab.com/ee/update/versions/gitlab_16_changes.html#long-running-user-type-data-change)
