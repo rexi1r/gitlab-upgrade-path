@@ -20,7 +20,7 @@ function CheckMigrations() {
         variant='contained'
         color='warning'
       >
-        Check Migrations before each upgrade
+        Check Background Migrations before each upgrade
       </Button>
     </a>
   );
