@@ -66,7 +66,7 @@
 
 - major: 16
   minor: 1
-  comments: 16.1 is a required step in you have [npm packages](https://docs.gitlab.com/ee/update/versions/gitlab_16_changes.html#1610) 
+  comments: 16.1 is a required step if you have [npm packages](https://docs.gitlab.com/ee/update/versions/gitlab_16_changes.html#1610) 
 
 - major: 16
   minor: 3
