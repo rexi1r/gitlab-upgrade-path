@@ -8,13 +8,16 @@ import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import Image from "util/image";
+import Link from "@mui/material/Link";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Checkbox from "@mui/material/Checkbox";
-import Tooltip from "@mui/material/Tooltip";
 import Alert from "@mui/material/Alert";
+
+import { styled } from "@mui/material/styles";
+import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
 
 // Local Components
 import VersionList from "util/all";
@@ -22,6 +25,16 @@ import VersionList from "util/all";
 const filterOptions = createFilterOptions({
   matchFrom: "start",
   stringify: (option) => option.version,
+});
+
+const CustomTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))({
+  [`& .${tooltipClasses.tooltip}`]: {
+    fontSize: 25,
+    maxWidth: 500,
+    padding: 15,
+  },
 });
 
 export default function Start() {
@@ -64,7 +77,20 @@ export default function Start() {
         <Typography variant='h4' component='div' gutterBottom>
           Upgrade Path
         </Typography>
-        <div>Select Versions</div>
+
+        <CustomTooltip
+          title='grep gitlab /opt/gitlab/version-manifest.txt'
+          leaveDelay={400}
+        >
+          <Link
+            target='_blank'
+            rel='noreferrer'
+            underline='hover'
+            href={"https://docs.gitlab.com/ee/user/version.html"}
+          >
+            <div>Select Versions</div>
+          </Link>
+        </CustomTooltip>
       </Box>
 
       <Box sx={style.autoBox}>
