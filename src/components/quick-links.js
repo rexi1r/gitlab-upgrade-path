@@ -4,19 +4,10 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import HelpIcon from "@mui/icons-material/Help";
 import Fab from "@mui/material/Fab";
-import Link from "@mui/material/Link";
-
+import EzLink from "util/ez_link";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Divider from "@mui/material/Divider";
-
-function EzLink({ url = "", text = "" }) {
-  return (
-    <Link target='_blank' rel='noreferrer' underline='hover' href={url}>
-      {text}
-    </Link>
-  );
-}
 
 function QuickLinks() {
   const [state, setState] = useState(false);
