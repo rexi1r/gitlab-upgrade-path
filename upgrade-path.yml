@@ -66,8 +66,11 @@
 
 - major: 16
   minor: 1
-  comments: 16.1 is a required step if you have [npm packages](https://docs.gitlab.com/ee/update/versions/gitlab_16_changes.html#1610) 
+  comments: 16.1 is a required step if you have [npm packages](https://docs.gitlab.com/ee/update/versions/gitlab_16_changes.html#1610)
 
 - major: 16
   minor: 3
   comments: 16.0 is a required upgrade step for [instances with 30k Users](https://docs.gitlab.com/ee/update/versions/gitlab_16_changes.html#long-running-user-type-data-change)
+
+- major: 16
+  minor: 7
