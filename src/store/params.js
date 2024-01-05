@@ -151,7 +151,7 @@ store.addSelector("shouldAuto", () => {
   let auto = store.selectState("auto");
 
   if (auto) {
-    return "-y";
+    return " -y";
   } else {
     return "";
   }
