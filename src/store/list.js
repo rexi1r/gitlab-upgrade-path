@@ -108,14 +108,24 @@ store.addSelector("betweenList", (state, current, target) => {
 // ========================================================================
 // -- Get Previous Version
 // ========================================================================
-store.addSelector("WhatsNewRelative", (state, version) => {
+store.addSelector("WhatsNewRelative", (_state, version) => {
   let list = clone(store.selectState("list"));
 
   // Sorting
   list = list.filter((x) => semver.lt(x.version, version.version));
   list = reverse(orderBy(list, ["major", "minor"]));
 
-  return list[0];
+  // Collect previous jump step to increment
+  let previousStep = list[0];
+
+  // Collect minor version just above from previous step
+  let targetList = VersionList.targets.filter((x) =>
+    semver.gt(x.version, previousStep.version)
+  );
+  targetList = orderBy(targetList, ["major", "minor"]);
+
+  // Return Next Up version
+  return targetList[0];
 });
 
 // ========================================================================

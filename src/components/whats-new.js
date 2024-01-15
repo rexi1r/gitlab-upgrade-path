@@ -21,6 +21,12 @@ function WhatsNew({ current, target }) {
     current
   )}&maxVersion=${whats(target)}`;
 
+  // Only show one version if there is only one jump between versions
+  let displayText = `${display(current)} > ${display(target)}`;
+  if (current.version === target.version) {
+    displayText = display(current);
+  }
+
   return (
     <a href={whatsNewUrl} target='_blank' rel='noreferrer'>
       <Button
@@ -30,9 +36,7 @@ function WhatsNew({ current, target }) {
       >
         <Box>
           <span>Whats New</span>
-          <span style={style.subtext}>
-            {display(current)} &gt; {display(target)}
-          </span>
+          <span style={style.subtext}>{displayText}</span>
         </Box>
       </Button>
     </a>

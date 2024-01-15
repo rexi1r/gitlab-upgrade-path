@@ -29,7 +29,7 @@ function Path() {
     setOpen(true);
   };
 
-  const handleClose = (event, reason) => {
+  const handleClose = (_event, _reason) => {
     setOpen(false);
   };
 
