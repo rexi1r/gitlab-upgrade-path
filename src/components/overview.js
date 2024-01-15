@@ -13,9 +13,11 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 
 function Overview({ path }) {
-  let current = flux.params.useState("current");
   let target = flux.params.useState("target");
   let distro = flux.params.useState("distro");
+
+  // Use relative first version from path
+  let current = flux.list.selectState("WhatsNewRelative", path[0]);
 
   return (
     <Box sx={style.view}>
