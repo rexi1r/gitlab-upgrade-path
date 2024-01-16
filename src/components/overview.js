@@ -16,8 +16,9 @@ function Overview({ path }) {
   let target = flux.params.useState("target");
   let distro = flux.params.useState("distro");
 
-  // Use relative first version from path
-  let current = flux.list.selectState("WhatsNewRelative", path[0]);
+  // Start with current version
+  let current = flux.params.selectState("current");
+  let relative = flux.list.selectState("WhatsNewRelative", current);
 
   return (
     <Box sx={style.view}>
@@ -44,7 +45,7 @@ function Overview({ path }) {
           </Button>
         </a>
 
-        <WhatsNew current={current} target={target} />
+        <WhatsNew current={relative} target={target} />
       </Box>
       <Box sx={{ margin: 1 }}>
         <CheckMigrations />

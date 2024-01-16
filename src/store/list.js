@@ -109,6 +109,7 @@ store.addSelector("betweenList", (state, current, target) => {
 // -- Get Previous Version
 // ========================================================================
 store.addSelector("WhatsNewRelative", (_state, version) => {
+  let current = flux.params.selectState("current");
   let list = clone(store.selectState("list"));
 
   // Sorting
@@ -117,6 +118,11 @@ store.addSelector("WhatsNewRelative", (_state, version) => {
 
   // Collect previous jump step to increment
   let previousStep = list[0];
+
+  // Don't increment if previous step is lower than the starting version
+  if (semver.lt(previousStep.version, current.version)) {
+    previousStep = current;
+  }
 
   // Collect minor version just above from previous step
   let targetList = VersionList.targets.filter((x) =>
