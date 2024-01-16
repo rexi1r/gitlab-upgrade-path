@@ -78,7 +78,11 @@ function Upgrade({
 
         {showNew && (
           <WhatsNew
-            current={flux.list.selectState("WhatsNewRelative", selectedVersion)}
+            current={flux.list.selectState(
+              "WhatsNewRelative",
+              selectedVersion,
+              true
+            )}
             target={selectedVersion}
           />
         )}

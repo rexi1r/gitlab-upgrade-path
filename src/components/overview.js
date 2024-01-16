@@ -15,9 +15,10 @@ import AlertTitle from "@mui/material/AlertTitle";
 function Overview({ path }) {
   let target = flux.params.useState("target");
   let distro = flux.params.useState("distro");
+  let current = flux.params.selectState("current");
 
   // Use relative first version from path
-  let current = flux.list.selectState("WhatsNewRelative", path[0]);
+  let relative = flux.list.selectState("WhatsNewRelative", current);
 
   return (
     <Box sx={style.view}>
@@ -44,7 +45,7 @@ function Overview({ path }) {
           </Button>
         </a>
 
-        <WhatsNew current={current} target={target} />
+        <WhatsNew current={relative} target={target} />
       </Box>
       <Box sx={{ margin: 1 }}>
         <CheckMigrations />
