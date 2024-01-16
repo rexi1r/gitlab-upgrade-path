@@ -15,9 +15,9 @@ import AlertTitle from "@mui/material/AlertTitle";
 function Overview({ path }) {
   let target = flux.params.useState("target");
   let distro = flux.params.useState("distro");
-  let current = flux.params.selectState("current");
 
-  // Use relative first version from path
+  // Start with current version
+  let current = flux.params.selectState("current");
   let relative = flux.list.selectState("WhatsNewRelative", current);
 
   return (
