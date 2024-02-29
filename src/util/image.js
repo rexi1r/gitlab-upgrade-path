@@ -3,7 +3,7 @@ import React from "react";
 function Image({ src = "flag", style = {}, local = true }) {
   let image = {};
   if (local) {
-    image.backgroundImage = `url(images/${src})`;
+    image.backgroundImage = `url(${process.env.PUBLIC_URL}/images/${src})`;
   } else {
     image.backgroundImage = `url(${src})`;
   }
