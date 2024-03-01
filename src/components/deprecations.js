@@ -5,13 +5,13 @@ import Box from "@mui/material/Box";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { padStart } from "lodash";
 
-function WhatsNew({ current, target }) {
+function Deprecations({ current, target }) {
   let relative = flux.list.selectState("WhatsNewRelative", current);
 
   function whats(version) {
     let major = `${padStart(version.major, 2, 0)}`;
     let minor = `${padStart(version.minor, 2, 0)}`;
-    return `${major}_${minor}`;
+    return `${major}.${minor}`;
   }
 
   // Add Display Helpers / WhatsNew
@@ -20,9 +20,9 @@ function WhatsNew({ current, target }) {
   }
 
   let url = "gitlab-com.gitlab.io/cs-tools/gitlab-cs-tools/what-is-new-since";
-  let whatsNewUrl = `https://${url}/?tab=features&minVersion=${whats(
+  let whatsNewUrl = `https://${url}/?tab=deprecations&minRemovalVersion=${whats(
     relative
-  )}&maxVersion=${whats(target)}`;
+  )}&maxRemovalVersion=${whats(target)}`;
 
   // Only show one version if there is only one jump between versions
   let displayText = `${display(relative)} > ${display(target)}`;
@@ -34,11 +34,14 @@ function WhatsNew({ current, target }) {
     <a href={whatsNewUrl} target='_blank' rel='noreferrer'>
       <Button
         sx={style.btn}
-        startIcon={<FontAwesomeIcon icon={["far", "star"]} size='lg' />}
+        color='warning'
+        startIcon={
+          <FontAwesomeIcon icon={["fas", "arrow-trend-down"]} size='xs' />
+        }
         variant='contained'
       >
         <Box>
-          <span>Whats New</span>
+          <span>Deprecations</span>
           <span style={style.subtext}>{displayText}</span>
         </Box>
       </Button>
@@ -46,7 +49,7 @@ function WhatsNew({ current, target }) {
   );
 }
 
-export default WhatsNew;
+export default Deprecations;
 
 const style = {
   btn: {

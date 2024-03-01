@@ -9,6 +9,7 @@ import Snackbar from "@mui/material/Snackbar";
 import DistroIcons from "components/distro-icons";
 import DistroInstall from "components/distro-install";
 import WhatsNew from "components/whats-new";
+import Deprecations from "components/deprecations";
 import ReleaseNotes from "components/release-notes";
 import UpgradeNotes from "components/upgrade-notes";
 import Comments from "components/comments";
@@ -78,7 +79,14 @@ function Upgrade({
 
         {showNew && (
           <WhatsNew
-            current={flux.list.selectState("WhatsNewRelative", selectedVersion)}
+            current={flux.list.selectState("PreviousVersion", selectedVersion)}
+            target={selectedVersion}
+          />
+        )}
+
+        {showNew && (
+          <Deprecations
+            current={flux.list.selectState("PreviousVersion", selectedVersion)}
             target={selectedVersion}
           />
         )}

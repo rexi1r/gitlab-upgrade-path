@@ -14,7 +14,7 @@ const store = flux.addStore("notes", initialSettings());
 // ========================================================================
 store.addSelector("list", (state, version) => {
   // Get Relative Previous
-  let previous = flux.list.selectState("WhatsNewRelative", version);
+  let previous = flux.list.selectState("PreviousVersion", version);
 
   // Get between Versions
   let targetList = flux.list.selectState("betweenList", previous, version);

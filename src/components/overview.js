@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Upgrade from "components/upgrade";
 import DistroIcons from "components/distro-icons";
 import WhatsNew from "components/whats-new";
+import Deprecations from "components/deprecations";
 import CheckMigrations from "components/check-migrations";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
@@ -18,7 +19,6 @@ function Overview({ path }) {
 
   // Start with current version
   let current = flux.params.selectState("current");
-  let relative = flux.list.selectState("WhatsNewRelative", current);
 
   return (
     <Box sx={style.view}>
@@ -45,7 +45,8 @@ function Overview({ path }) {
           </Button>
         </a>
 
-        <WhatsNew current={relative} target={target} />
+        <WhatsNew current={current} target={target} />
+        <Deprecations current={current} target={target} />
       </Box>
       <Box sx={{ margin: 1 }}>
         <CheckMigrations />
