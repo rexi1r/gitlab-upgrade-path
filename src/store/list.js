@@ -5,6 +5,9 @@ import { orderBy, reverse, clone } from "lodash";
 
 const semver = require("semver");
 
+window.semver = require("semver");
+window.VersionList = VersionList;
+
 function initialSettings() {
   return {
     list: [],
@@ -36,7 +39,7 @@ store.register("version/add", async (dispatch, version) => {
 // ========================================================================
 store.addSelector("targets", () => {
   let current = store.useState("current");
-  let list = VersionList.targets;
+  let list = clone(VersionList.targets);
 
   if (list) {
     list = reverse(orderBy(list, ["major", "minor"]));
@@ -83,7 +86,7 @@ store.addSelector("upgradePath", () => {
 });
 
 // Between Version Check / All Minor Versions
-store.addSelector("betweenList", (state, current, target) => {
+store.addSelector("betweenList", (_state, current, target) => {
   let list = VersionList.targets;
 
   // Sorting
@@ -106,13 +109,16 @@ store.addSelector("betweenList", (state, current, target) => {
 });
 
 // ========================================================================
-// -- Get Previous Version
+// -- Get Previous Version / Step
 // ========================================================================
-store.addSelector("WhatsNewRelative", (_state, version) => {
+// Validators:
+//  Never go below the starting version
+//  Assume Upgrade Steps
+store.addSelector("PreviousVersion", (_state, version) => {
   let current = flux.params.selectState("current");
-  let list = clone(store.selectState("list"));
 
-  // Sorting
+  // Get Upgrade Steps lower thant input version
+  let list = clone(store.selectState("list"));
   list = list.filter((x) => semver.lt(x.version, version.version));
   list = reverse(orderBy(list, ["major", "minor"]));
 
@@ -124,14 +130,28 @@ store.addSelector("WhatsNewRelative", (_state, version) => {
     previousStep = current;
   }
 
-  // Collect minor version just above from previous step
-  let targetList = VersionList.targets.filter((x) =>
-    semver.gt(x.version, previousStep.version)
-  );
-  targetList = orderBy(targetList, ["major", "minor"]);
+  // This bad
+  return previousStep;
+});
+
+// ========================================================================
+// -- Relative Pathing
+// ========================================================================
+store.addSelector("WhatsNewRelative", (_state, version) => {
+  let list = clone(VersionList.index);
+
+  // Bump up a minor version for filtering
+  let increment = semver.inc(version.version, "minor");
+
+  // Sorting
+  list = list.filter((x) => semver.gte(x.version, increment));
+  list = orderBy(list, ["major", "minor"]);
+
+  // Collect previous jump step to increment
+  let previousStep = list[0];
 
   // Return Next Up version
-  return targetList[0];
+  return previousStep;
 });
 
 // ========================================================================
