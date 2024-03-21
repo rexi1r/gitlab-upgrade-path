@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Upgrade from "components/upgrade";
 import DistroIcons from "components/distro-icons";
 import WhatsNew from "components/whats-new";
-import Deprecations from "components/deprecations";
+import WhatsDeprecated from "components/whats-deprecated";
 import CheckMigrations from "components/check-migrations";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
@@ -46,7 +46,7 @@ function Overview({ path }) {
         </a>
 
         <WhatsNew current={current} target={target} />
-        <Deprecations current={current} target={target} />
+        <WhatsDeprecated current={current} target={target} />
       </Box>
       <Box sx={{ margin: 1 }}>
         <CheckMigrations />
@@ -65,6 +65,7 @@ function Overview({ path }) {
               showNew={false}
               showCheckMigrations={false}
               showUpgradeNotes={false}
+              showUpgradeDeprecations={false}
               selectedVersion={version}
             />
           ))}

@@ -13,6 +13,7 @@ import "store/sys";
 import "store/list";
 import "store/params";
 import "store/notes";
+import "store/deprecations";
 import "util/latest"; // Placeholder for Latest Version
 import "util/versions"; // List of all
 

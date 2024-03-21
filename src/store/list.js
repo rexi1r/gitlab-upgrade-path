@@ -147,6 +147,11 @@ store.addSelector("WhatsNewRelative", (_state, version) => {
   list = list.filter((x) => semver.gte(x.version, increment));
   list = orderBy(list, ["major", "minor"]);
 
+  // If list is empty return latest
+  if (list.length === 0) {
+    return VersionList.index[0];
+  }
+
   // Collect previous jump step to increment
   let previousStep = list[0];
 

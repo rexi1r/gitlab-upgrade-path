@@ -21,7 +21,7 @@ index = dirs.each_with_object({}) do |dir, idx|
   idx[dir] ||= []
   tree = client.repository.tree(project, ref: :master, path: "data/release_posts/#{dir}")
   tree.select { |x| x.name.include? 'upgrade' }.map do |file|
-    output = YAML.safe_load client.files.show(project, file.path, :master, :raw)
+    output = YAML.safe_load client.files.show(project, file.path, :master, :raw).data
     idx[dir].push output.dig('upgrades', 0, 'description')&.split("\n")
   end
 

@@ -9,8 +9,9 @@ import Snackbar from "@mui/material/Snackbar";
 import DistroIcons from "components/distro-icons";
 import DistroInstall from "components/distro-install";
 import WhatsNew from "components/whats-new";
-import Deprecations from "components/deprecations";
+import WhatsDeprecated from "components/whats-deprecated";
 import ReleaseNotes from "components/release-notes";
+import UpgradeDeprecations from "components/upgrade-deprecations";
 import UpgradeNotes from "components/upgrade-notes";
 import Comments from "components/comments";
 import CheckMigrations from "./check-migrations";
@@ -22,11 +23,14 @@ function Upgrade({
   showIcon = true,
   showNew = true,
   showUpgradeNotes = true,
+  showUpgradeDeprecations = true,
   showCheckMigrations = true,
 }) {
   let distro = flux.params.useState("distro");
   let edition = flux.params.useState("edition");
   let auto = flux.params.selectState("shouldAuto");
+  let current = flux.list.selectState("PreviousVersion", selectedVersion);
+  console.log("current", current);
 
   // Clipboard
   const [open, setOpen] = useState(false);
@@ -85,7 +89,7 @@ function Upgrade({
         )}
 
         {showNew && (
-          <Deprecations
+          <WhatsDeprecated
             current={flux.list.selectState("PreviousVersion", selectedVersion)}
             target={selectedVersion}
           />
@@ -95,6 +99,10 @@ function Upgrade({
       {showCheckMigrations && <CheckMigrations />}
 
       {showUpgradeNotes && <UpgradeNotes version={selectedVersion} />}
+
+      {showUpgradeDeprecations && (
+        <UpgradeDeprecations current={current} target={selectedVersion} />
+      )}
 
       <Snackbar
         open={open}
