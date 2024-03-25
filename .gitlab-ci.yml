@@ -1,6 +1,6 @@
 test:
   stage: test
-  image: node:14.17.6
+  image: node:20.11.1
   script:
     - yarn install
     - yarn build
@@ -33,7 +33,7 @@ setup:
 
 pages:
   stage: deploy
-  image: node:14.17.6
+  image: node:20.11.1
 
   script:
     - ./setup.sh

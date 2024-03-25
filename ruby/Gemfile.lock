@@ -1,23 +1,32 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (7.0.0)
+    activesupport (7.1.3.2)
+      base64
+      bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
+      connection_pool (>= 2.2.5)
+      drb
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
+      mutex_m
       tzinfo (~> 2.0)
-    amazing_print (1.4.0)
-    concurrent-ruby (1.1.9)
-    ethon (0.15.0)
+    amazing_print (1.6.0)
+    base64 (0.2.0)
+    bigdecimal (3.1.7)
+    concurrent-ruby (1.2.3)
+    connection_pool (2.4.1)
+    drb (2.2.1)
+    ethon (0.16.0)
       ffi (>= 1.15.0)
-    ffi (1.15.4)
-    gitlab_chronic_duration (0.10.6.2)
+    ffi (1.16.3)
+    gitlab_chronic_duration (0.12.0)
       numerizer (~> 0.2)
-    i18n (1.8.11)
+    i18n (1.14.4)
       concurrent-ruby (~> 1.0)
-    kramdown (2.3.1)
+    kramdown (2.4.0)
       rexml
-    labclient (0.5.1)
+    labclient (0.7.0)
       activesupport (>= 6.0)
       amazing_print (>= 1.2)
       gitlab_chronic_duration (>= 0.10.6.2)
@@ -25,16 +34,18 @@ GEM
       oj (>= 3.10)
       ougai (>= 2.0)
       typhoeus (>= 1.4)
-    minitest (5.15.0)
+    minitest (5.22.3)
+    mutex_m (0.2.0)
     numerizer (0.2.0)
-    oj (3.13.10)
+    oj (3.16.3)
+      bigdecimal (>= 3.0)
     ougai (2.0.0)
       oj (~> 3.10)
-    rexml (3.2.5)
+    rexml (3.2.6)
     sem_version (2.0.1)
-    typhoeus (1.4.0)
+    typhoeus (1.4.1)
       ethon (>= 0.9.0)
-    tzinfo (2.0.4)
+    tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
 
 PLATFORMS
@@ -46,4 +57,4 @@ DEPENDENCIES
   sem_version
 
 BUNDLED WITH
-   2.2.32
+   2.2.33

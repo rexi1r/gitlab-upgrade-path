@@ -1,7 +1,7 @@
 .PHONY: all
 all: data web
 
-GENERATED_FILES = ruby/index.json ruby/releases.js ruby/notes.js ruby/path.json
+GENERATED_FILES = ruby/index.json ruby/releases.js ruby/notes.js ruby/path.json ruby/deprecations.json
 
 $(GENERATED_FILES): upgrade-path.yml
 

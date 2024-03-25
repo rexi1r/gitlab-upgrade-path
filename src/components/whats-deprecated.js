@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { padStart } from "lodash";
 
-function Deprecations({ current, target }) {
+function WhatsDeprecated({ current, target }) {
   let relative = flux.list.selectState("WhatsNewRelative", current);
 
   function whats(version) {
@@ -13,6 +13,9 @@ function Deprecations({ current, target }) {
     let minor = `${padStart(version.minor, 2, 0)}`;
     return `${major}.${minor}`;
   }
+
+  // Collect Count
+  let count = flux.deprecations.selectState("list", current, target).length;
 
   // Add Display Helpers / WhatsNew
   function display(version) {
@@ -34,14 +37,14 @@ function Deprecations({ current, target }) {
     <a href={whatsNewUrl} target='_blank' rel='noreferrer'>
       <Button
         sx={style.btn}
-        color='warning'
+        color='error'
         startIcon={
           <FontAwesomeIcon icon={["fas", "arrow-trend-down"]} size='xs' />
         }
         variant='contained'
       >
         <Box>
-          <span>Deprecations</span>
+          <span>{count} Deprecations</span>
           <span style={style.subtext}>{displayText}</span>
         </Box>
       </Button>
@@ -49,7 +52,7 @@ function Deprecations({ current, target }) {
   );
 }
 
-export default Deprecations;
+export default WhatsDeprecated;
 
 const style = {
   btn: {
