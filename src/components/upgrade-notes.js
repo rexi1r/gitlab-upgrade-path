@@ -26,7 +26,7 @@ function UpgradeNotes({ version }) {
 
   return (
     <Container sx={style.view}>
-      <h2 style={{ color: "#f44336" }}>Release Notes</h2>
+      <h2 style={{ color: "#66bb6a" }}>Release Notes</h2>
       {list && list.map((x) => <VersionNotes key={x.name} {...x} />)}
     </Container>
   );
