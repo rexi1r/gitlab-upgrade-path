@@ -21,9 +21,12 @@ function VersionNotes({ name, notes }) {
 function UpgradeNotes({ version }) {
   let list = flux.notes.selectState("list", version);
 
+  // Do not return anything if list is empty
+  if (!list || list.length === 0) return null;
+
   return (
     <Container sx={style.view}>
-      <h2 style={{ color: "#66bb6a" }}>Release Notes</h2>
+      <h2 style={{ color: "#f44336" }}>Release Notes</h2>
       {list && list.map((x) => <VersionNotes key={x.name} {...x} />)}
     </Container>
   );

@@ -45,7 +45,6 @@ function VersionNotes({
   documentation_url,
   issue_url,
   removal_milestone,
-
   breaking_change,
 }) {
   return (
@@ -83,9 +82,12 @@ function VersionNotes({
 function UpgradeDeprecations({ current, target }) {
   let list = flux.deprecations.selectState("list", current, target);
 
+  // Do not return anything if list is empty
+  if (!list || list.length === 0) return null;
+
   return (
     <Container sx={style.view}>
-      {list.length !== 0 && <h2 style={{ color: "#f44336" }}>Deprecations</h2>}
+      {<h2 style={{ color: "#f44336" }}>Deprecations</h2>}
       {list && list.map((x) => <VersionNotes key={x.title} {...x} />)}
     </Container>
   );

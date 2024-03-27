@@ -30,7 +30,6 @@ function Upgrade({
   let edition = flux.params.useState("edition");
   let auto = flux.params.selectState("shouldAuto");
   let current = flux.list.selectState("PreviousVersion", selectedVersion);
-  console.log("current", current);
 
   // Clipboard
   const [open, setOpen] = useState(false);
