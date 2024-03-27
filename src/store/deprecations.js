@@ -22,6 +22,12 @@ store.addSelector("list", (state, current, target) => {
   let index = [];
   // Collect Notes
   targetList.forEach((tv) => {
+    // Skip if no Deprecations in either major or minor
+    if (Deprecations[tv.major] === undefined) {
+      return;
+    }
+
+    // Get List
     let list = Deprecations[tv.major][tv.minor];
 
     // Add to List
