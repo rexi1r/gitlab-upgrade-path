@@ -49,7 +49,7 @@ function Upgrade({
       case "centos":
         return `yum install${auto} gitlab-${edition}-${selectedVersion.version}`;
       case "docker":
-        return `docker run gitlab-${edition}=${selectedVersion.version}-${edition}.0`;
+        return `docker run gitlab/gitlab-${edition}:${selectedVersion.version}-${edition}.0`;
       default:
         return "";
     }
