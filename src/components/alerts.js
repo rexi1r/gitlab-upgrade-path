@@ -3,28 +3,10 @@ import flux from "@aust/react-flux";
 import Box from "@mui/material/Box";
 import ReactMarkdown from "react-markdown";
 import Container from "@mui/material/Container";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Alert, AlertTitle } from "@mui/material";
-
-
-// function AlertMessage({ severity, title, message }) {
-// 	return (
-// 		<Box style={style.box}>
-// 			<Box style={style.icon}>
-// 				<FontAwesomeIcon icon={["fas", "triangle-exclamation"]} size='xl' />
-// 			</Box>
-
-// 			<Box style={style.body}>
-// 				<ReactMarkdown children={message} />
-// 			</Box>
-// 		</Box>
-// 	);
-// }
-
 
 function AlertMessage({ severity, title, message }) {
 	return (
-
 		<Alert severity={severity} sx={style.alert}>
 			<AlertTitle>				{title}			</AlertTitle>
 			<Box sx={style.body}>
@@ -56,7 +38,6 @@ export default Alerts;
 
 const style = {
 	view: {
-		// backgroundColor: 'green',
 		paddingLeft: 2,
 		paddingRight: 2,
 		marginTop: '0.5rem',
@@ -64,20 +45,6 @@ const style = {
 	},
 
 	box: {
-
-		// borderRadius: "0.2rem",
 		marginBottom: '0.5rem',
-
-		// backgroundColor: "rgb(7, 19, 24)",
-		// display: "flex",
-
-
 	},
-
-	body: {
-		// paddingLeft: 2,
-		// paddingRight: 2,
-	},
-
-
 }
