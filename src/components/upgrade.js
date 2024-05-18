@@ -14,12 +14,14 @@ import ReleaseNotes from "components/release-notes";
 import UpgradeDeprecations from "components/upgrade-deprecations";
 import UpgradeNotes from "components/upgrade-notes";
 import Comments from "components/comments";
-import CheckMigrations from "./check-migrations";
+import CheckMigrations from "components/check-migrations";
+import Alerts from "components/alerts";
 
 function Upgrade({
   selectedVersion = {},
   showRelease = true,
   showComments = true,
+  showAlerts = true,
   showIcon = true,
   showNew = true,
   showUpgradeNotes = true,
@@ -57,6 +59,7 @@ function Upgrade({
 
   return (
     <Box sx={style.box}>
+      {showAlerts && <Alerts version={selectedVersion} />}
       {showComments && <Comments version={selectedVersion} />}
 
       <Box sx={style.installBox}>
