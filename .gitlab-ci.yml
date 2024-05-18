@@ -20,6 +20,7 @@ setup:
       - ruby/notes.js
       - ruby/versions.js
       - ruby/path.json
+      - ruby/alerts.js
     expire_in: 1 day
   cache:
     key: "ruby-$RUBY_CACHE_KEY"

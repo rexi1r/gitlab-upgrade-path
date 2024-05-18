@@ -26,6 +26,13 @@ Example:
   comments: "**Migrations can take a long time!**"
 ```
 
+## Alerts
+
+Alerts are things that potentially span different versions where actions may need to be taken. To add/edit alerts:
+
+1. Edit the `alerts.yml`
+2. Add a new entry
+
 ## Merge Request
 
 1. Open a new merge request cc/assign @davinwalker
