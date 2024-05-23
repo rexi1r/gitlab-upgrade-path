@@ -189,7 +189,7 @@ store.addSelector("upgradeAlerts", (state, version) => {
 });
 
 store.addSelector("upgradeSummaryAlerts", (state, current, target) => {
-	let list = alerts.filter((x) => semver.gte(x.start, current.version));
+	let list = alerts.filter((x) => semver.gte(x.end, current.version));
 	list = list.filter((x) => semver.lte(x.start, target.version));
 
 	return list;
