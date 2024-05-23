@@ -1,6 +1,34 @@
 ---
+- start: "15.0.0"
+  end: "15.4.6"
+  severity: warning
+  title: "Additional Steps Required for Multiple Rails Nodes"
+  message: >
+    If you have multiple [web/rails nodes](https://docs.gitlab.com/ee/administration/reference_architectures/2k_users.html) 15.1 is an additional required step. See [15.2.0 Upgrade Notes](https://docs.gitlab.com/ee/update/#1520)
+
 - start: "16.0.0"
-  end: "16.11.0"
+  end: "16.4.0"
+  severity: warning
+  title: "Instances with NPM packages in their package registry"
+  message: >
+    If you have [npm packages](https://docs.gitlab.com/ee/update/versions/gitlab_16_changes.html#1610) in your package registry, you must upgrade to **16.1** first.
+
+- start: "16.0.0"
+  end: "16.4.0"
+  severity: warning
+  title: "Large Environments with 30k Users"
+  message: >
+    **16.0** is a required upgrade step for [instances with 30k Users](https://docs.gitlab.com/ee/update/versions/gitlab_16_changes.html#long-running-user-type-data-change)
+
+- start: "16.0.0"
+  end: "16.4.0"
+  severity: warning
+  title: "Instances with large pipeline variables history"
+  message: >
+    **16.2** is a required update step for Instances with large pipeline variables history. See [16.2.0 Upgrade Notes](https://docs.gitlab.com/ee/update/#1620)
+
+- start: "16.0.0"
+  end: "16.12.0"
   severity: error
   title: Expiring Access Tokens
   message: >

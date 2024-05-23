@@ -12,6 +12,7 @@ import WhatsDeprecated from "components/whats-deprecated";
 import CheckMigrations from "components/check-migrations";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
+import Alerts from "components/alerts";
 
 function Overview({ path }) {
 	let target = flux.params.useState("target");
@@ -19,15 +20,19 @@ function Overview({ path }) {
 
 	// Start with current version
 	let current = flux.params.selectState("current");
-
 	return (
 		<Box sx={style.view}>
+			<Alerts summary={true} current={current} target={target} />
+
+
 			<Alert severity='info' sx={{ marginBottom: 1 }}>
 				<AlertTitle sx={{ textAlign: "center" }}>
 					This is the supported upgrade path overview
 				</AlertTitle>
 				Review each step and the version specific upgrade notes
 			</Alert>
+
+
 
 			<Box>
 				<a

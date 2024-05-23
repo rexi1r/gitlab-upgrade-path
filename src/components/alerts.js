@@ -17,8 +17,16 @@ function AlertMessage({ severity, title, message }) {
 }
 
 
-function Alerts({ version }) {
-	let alerts = flux.list.useState("upgradeAlerts", version);
+function Alerts({ version, summary = false, current, target }) {
+
+	let alerts;
+
+	if (summary) {
+		alerts = flux.list.useState("upgradeSummaryAlerts", current, target);
+	} else {
+		alerts = flux.list.useState("upgradeAlerts", version);
+	}
+
 
 	// If Alerts empty or missing return false
 	if (!alerts) return false;
@@ -37,6 +45,7 @@ export default Alerts;
 
 
 const style = {
+
 	view: {
 		paddingLeft: 2,
 		paddingRight: 2,
@@ -44,7 +53,7 @@ const style = {
 		marginBottom: '1em'
 	},
 
-	box: {
+	alert: {
 		marginBottom: '0.5rem',
 	},
 }
