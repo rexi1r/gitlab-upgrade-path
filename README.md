@@ -6,25 +6,11 @@ Generate supported upgrade paths to assist with updating GitLab.
 
 # Adding a new supported path
 
-Whenever a new release requires a minor version it current will need a manually modification.
-
-Upgrade path is generate from the `upgrade-path.yml` in the root of the project.
+Upgrade path is generated from https://gitlab.com/gitlab-org/gitlab/-/raw/master/config/upgrade_path.yml.
 
 ## Update Upgrade Path
 
-1. Edit the `upgrade-path.yml`
-2. Add new entry
-
-- major/minor
-- optional `comments:`
-
-Example:
-
-```
-- major: 12
-  minor: 10
-  comments: "**Migrations can take a long time!**"
-```
+Follow the instruction from [adding a requires top](<LINK_TO_BE_ADDED>). 
 
 ## Alerts
 
