@@ -12,7 +12,7 @@ collect_data() {
 	bundle exec release_posts.rb
 	echo "Downloading all release notes data to notes.js..."
 	bundle exec collect_notes.rb
-	echo "Generating upgrade path using upgrade-path.yml to versions.js..."
+	echo "Generating upgrade path using upgrade_path.yml to versions.js..."
 	bundle exec generate_supported_path.rb
 	echo "Generating JSON upgrade path to path.json..."
 	bundle exec create_json_upgrade_path.rb

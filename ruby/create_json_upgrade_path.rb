@@ -5,11 +5,16 @@
 # ============================================================
 require 'yaml'
 require 'json'
+require 'labclient'
 
 # https://about.gitlab.com/support/statement-of-support/#version-support
 # "we support the current major version and previous two major versions only"
 
-list = YAML.safe_load_file '../upgrade-path.yml'
+client = LabClient::Client.new(url: 'https://gitlab.com', token: '')
+
+project = 'gitlab-org/gitlab'
+
+list = YAML.safe_load(client.files.show(project, 'config/upgrade_path.yml', :master, :raw).data)
 
 # Version Index
 index = JSON.parse File.read('index.json')

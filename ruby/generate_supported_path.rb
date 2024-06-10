@@ -5,8 +5,15 @@
 # ============================================================
 require 'yaml'
 require 'json'
+require 'labclient'
 
-list = YAML.safe_load_file '../upgrade-path.yml'
+client = LabClient::Client.new(url: 'https://gitlab.com', token: '')
+
+project = 'gitlab-org/gitlab'
+
+# Collect ugprade_path.yml
+
+list = YAML.safe_load(client.files.show(project, 'config/upgrade_path.yml', :master, :raw).data)
 
 result = list.map { |e| "flux.dispatch('version/add',#{e.to_json})" }
 
