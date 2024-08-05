@@ -37,8 +37,8 @@
 
     After deploying 16.0 (or a later release) any non-expiring access tokens will expire 1 year from your first 16.x or above deployment date. [Guide to Identify](https://docs.gitlab.com/ee/security/token_overview.html#troubleshooting)
 
-- start: "15.11"
-  end: "17.2"
+- start: "15.11.0"
+  end: "17.11.0"
   severity: error
   title: "Potential PostgreSQL index corruption when upgrading OS - glibc locale data compatibility"
   message: >
