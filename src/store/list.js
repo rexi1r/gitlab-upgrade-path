@@ -25,6 +25,9 @@ store.register("version/add", async (dispatch, version) => {
 		return x.major === version.major && x.minor === version.minor;
 	});
 
+	// Ignore Versions eitherfuture or don't have a corresponding patch versions
+	if (latest === undefined) return;
+
 	let list = store.selectState("list");
 	list.push(latest);
 
@@ -69,7 +72,6 @@ store.addSelector("upgradePath", () => {
 
 	// Sorting
 	list = reverse(orderBy(list, ["major", "minor"]));
-
 	let candidates = list.filter((x) => {
 		return (
 			semver.gt(x.version, current.version) &&
