@@ -21,8 +21,11 @@ index = JSON.parse File.read('index.json')
 
 # Find Latest Patch Version for Minor Steps
 all = list.map do |step|
+  # Ignore Future Versions
+  next unless index.find { |v| step['major'] == v['major'] && step['minor'] == v['minor'] }
+
   index.find { |v| step['major'] == v['major'] && step['minor'] == v['minor'] }['version']
-end
+end.compact
 
 # Add Very Latest
 all.push index.first['version']
@@ -34,8 +37,11 @@ supported = index.map { |v| v['major'] }.uniq[0..1]
 supported_path = list.map do |step|
   next unless supported.include? step['major']
 
+  # Ignore Future Versions
+  next unless index.find { |v| step['major'] == v['major'] && step['minor'] == v['minor'] }
+
   index.find { |v| step['major'] == v['major'] && step['minor'] == v['minor'] }['version']
-end
+end.compact
 
 result = {
   supported: supported_path.compact,
