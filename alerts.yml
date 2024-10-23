@@ -34,6 +34,7 @@
   message: >
     With [GitLab 16.0](https://docs.gitlab.com/ee/update/deprecations.html#non-expiring-access-tokens) all access tokens have a [forced expiry date](https://about.gitlab.com/blog/2023/10/25/access-token-lifetime-limits).
 
+    Users upgrading after July 24, 2024, from a pre-16.0 version of GitLab to the latest patch release of Version 16.0 or later will not have an expiration date set for tokens that didn't have one previously.
 
     After deploying 16.0 (or a later release) any non-expiring access tokens will expire 1 year from your first 16.x or above deployment date. [Guide to Identify](https://docs.gitlab.com/ee/security/token_overview.html#troubleshooting)
 
