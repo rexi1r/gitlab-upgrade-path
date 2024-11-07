@@ -44,3 +44,10 @@
   title: "Potential PostgreSQL index corruption when upgrading OS - glibc locale data compatibility"
   message: >
     If you upgrade the operating system on which PostgreSQL runs, an upgrade of locale data changes in glibc 2.28 and later might corrupt your database indexes. See [upgrading operating systems for PostgreSQL guide for options to avoid this issue](https://docs.gitlab.com/ee/administration/postgresql/upgrading_os.html)
+
+- start: "16.11.0"
+  end: "17.11.0"
+  severity: warning
+  title: "OpenSSL v3 Upgrade"
+  message: >
+    With [GitLab 17.7](https://docs.gitlab.com/ee/update/versions/gitlab_17_changes.html#1770), the Linux package upgrades OpenSSL from from v1.1.1w to v3.0.0. Before upgrading, use the [OpenSSL 3 guide](https://docs.gitlab.com/omnibus/settings/ssl/openssl_3.html) to identify and assess the compatibility of your external integrations.
