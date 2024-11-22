@@ -5,6 +5,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 // Routes
 import Start from "view/start";
 import Path from "view/path";
+import Downgrade from "view/downgrade";
 
 // Theme
 const darkTheme = createTheme({
@@ -21,6 +22,7 @@ const Nav = () => {
       <ThemeProvider theme={darkTheme}>
         {status === "start" && <Start />}
         {status === "path" && <Path />}
+        {status === "downgrade" && <Downgrade />}
       </ThemeProvider>
     </div>
   );

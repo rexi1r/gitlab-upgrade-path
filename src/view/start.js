@@ -17,17 +17,20 @@ import Checkbox from "@mui/material/Checkbox";
 import Alert from "@mui/material/Alert";
 
 import { styled } from "@mui/material/styles";
-import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 
 // Local Components
 import VersionList from "util/all";
+
+// Downgrade Check
+const semver = require("semver");
 
 const filterOptions = createFilterOptions({
   matchFrom: "start",
   stringify: (option) => option.version,
 });
 
-const CustomTooltip = styled(({ className, ...props }: TooltipProps) => (
+const CustomTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))({
   [`& .${tooltipClasses.tooltip}`]: {
@@ -50,16 +53,12 @@ export default function Start() {
   async function buildPath() {
     if (!current) return false;
 
-    // await flux.dispatch("list/update", {
-    //   current: current,
-    //   target: target,
-    //   distro: distro,
-    //   edition: edition,
-    //   auto: auto,
-    //   downtime: downtime,
-    // });
+    if (semver.lt(target.version, current.version)) {
+      flux.dispatch("sys/nav", "downgrade");
+    } else {
+      flux.dispatch("sys/nav", "path");
+    }
 
-    flux.dispatch("sys/nav", "path");
   }
 
   return (

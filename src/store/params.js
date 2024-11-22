@@ -2,6 +2,9 @@ import flux from "@aust/react-flux";
 
 import VersionList from "util/all";
 
+// Downgrade Check
+const semver = require("semver");
+
 function initialSettings() {
   return {
     current: null,
@@ -14,6 +17,7 @@ function initialSettings() {
   };
 }
 
+
 const store = flux.addStore("params", initialSettings());
 
 // Entry point
@@ -22,8 +26,15 @@ store.register("params/init", async (dispatch) => {
 
   // Current is the only required param
   let current = store.selectState("current");
+  let target = store.selectState("target");
   if (current) {
-    flux.dispatch("sys/nav", "path");
+
+    if (semver.lt(target.version, current.version)) {
+      flux.dispatch("sys/nav", "downgrade");
+    } else {
+      flux.dispatch("sys/nav", "path");
+    }
+
   } else {
     flux.dispatch("sys/nav", "start");
   }
