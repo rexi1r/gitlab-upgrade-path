@@ -4,6 +4,18 @@ https://gitlab-com.gitlab.io/support/toolbox/upgrade-path
 
 Generate supported upgrade paths to assist with updating GitLab.
 
+## API / Upgrade Data Points
+
+There isn't an specific API, but there is an json artifact that can be downloaded.
+
+```
+https://gitlab-com.gitlab.io/support/toolbox/upgrade-path/path.json
+```
+
+```json
+{"supported":["17.3.6","17.5.1"], "all":["16.7.10","16.11.10","17.3.6","17.5.1","17.5.1"]}
+```
+
 # Adding a new supported path
 
 Upgrade path is generated from https://gitlab.com/gitlab-org/gitlab/-/raw/master/config/upgrade_path.yml.
