@@ -30,7 +30,7 @@ function QuickLinks() {
         <List>
           <ListItem>
             <EzLink
-              url='https://docs.gitlab.com/ee/update/index.html#upgrade-paths'
+              url='https://docs.gitlab.com/ee/update/upgrade_paths.html'
               text='Upgrade Path'
             />
           </ListItem>
