@@ -22,7 +22,7 @@ Upgrade path is generated from https://gitlab.com/gitlab-org/gitlab/-/raw/master
 
 ## Update Upgrade Path
 
-Follow the instruction from [adding a requires top](https://docs.gitlab.com/ee/development/avoiding_required_stops.html#adding-required-stops). 
+Follow the instruction from [adding a required stop](https://docs.gitlab.com/ee/development/avoiding_required_stops.html#adding-required-stops).
 
 ## Alerts
 
