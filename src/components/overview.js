@@ -33,7 +33,7 @@ function Overview({ path }) {
 
       <Box>
         <a
-          href={"https://docs.gitlab.com/ee/update/#upgrade-paths"}
+          href={"https://docs.gitlab.com/ee/update/upgrade_paths.html"}
           target='_blank'
           rel='noreferrer'
         >
