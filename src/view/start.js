@@ -147,7 +147,17 @@ export default function Start() {
 
         <Box sx={style.choices}>
           <FormControl component='fieldset'>
-            <FormLabel component='legend'>Distro</FormLabel>
+            <FormLabel component='legend'>
+              Distro&nbsp;
+              <Link
+                target='_blank'
+                rel='noreferrer'
+                underline='hover'
+                href={"https://docs.gitlab.com/ee/administration/package_information/supported_os.html"}
+              >
+                (Supported OS)
+              </Link>
+            </FormLabel>
             <RadioGroup
               aria-label='distro'
               defaultValue={distro}
