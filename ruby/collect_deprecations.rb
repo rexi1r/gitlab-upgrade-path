@@ -6,8 +6,8 @@
 require 'labclient'
 require 'sem_version'
 
+# API Setup
 client = LabClient::Client.new(url: 'https://gitlab.com', token: '')
-
 project = 'gitlab-org/gitlab'
 
 # Collect Root
@@ -15,11 +15,24 @@ tree = client.repository.tree(project, ref: :master, path: 'data/deprecations')
 
 # Convert into YAML
 list = tree.select { |x| x.name.include? 'yml' }.flat_map do |file|
+  attempts = 0
   puts "Collecting File #{file.name}"
+
   YAML.safe_load(
     client.files.show(project, file.path, :master, :raw).data,
     permitted_classes: [Date]
   )
+rescue StandardError => e
+  attempts += 1
+  if attempts <= 3
+    puts "Retrying due to: #{e.message}"
+    # Exponential backoff || Rand wait
+    sleep (2**attempts) + rand(0..0.5)
+    retry
+  else
+    puts 'Max retries reached. Giving up.'
+    raise e
+  end
 end
 
 index = {}
