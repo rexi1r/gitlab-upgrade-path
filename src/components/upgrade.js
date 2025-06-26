@@ -48,7 +48,7 @@ function Upgrade({
     switch (distro) {
       case "ubuntu":
         return `apt-get install${auto} gitlab-${edition}=${selectedVersion.version}-${edition}.0`;
-      case "centos":
+      case "alma":
         return `yum install${auto} gitlab-${edition}-${selectedVersion.version}`;
       case "docker":
         return `docker run gitlab/gitlab-${edition}:${selectedVersion.version}-${edition}.0`;

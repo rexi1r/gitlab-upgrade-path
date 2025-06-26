@@ -170,9 +170,9 @@ export default function Start() {
                 label='Ubuntu'
               />
               <FormControlLabel
-                value='centos'
+                value='alma'
                 control={<Radio />}
-                label='CentOS'
+                label='Alma Linux'
               />
               <FormControlLabel
                 value='docker'

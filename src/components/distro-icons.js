@@ -7,7 +7,7 @@ function DistroIcons({ distro }) {
       {distro === "docker" && (
         <FontAwesomeIcon icon={["fab", "docker"]} size={"lg"} />
       )}
-      {distro === "centos" && (
+      {distro === "alma" && (
         <FontAwesomeIcon icon={["fab", "centos"]} size={"lg"} />
       )}
 
