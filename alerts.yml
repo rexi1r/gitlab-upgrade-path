@@ -51,3 +51,10 @@
   title: "OpenSSL v3 Upgrade"
   message: >
     With [GitLab 17.7](https://docs.gitlab.com/ee/update/versions/gitlab_17_changes.html#1770), the Linux package upgrades OpenSSL from from v1.1.1w to v3.0.0. Before upgrading, use the [OpenSSL 3 guide](https://docs.gitlab.com/omnibus/settings/ssl/openssl_3.html) to identify and assess the compatibility of your external integrations.
+
+- start: "17.8.0"
+  end: "18.0.0"
+  severity: warning
+  title: "Multi-node architectures: new encryption secrets introduced in 17.8"
+  message: >
+    In [GitLab 17.8](https://docs.gitlab.com/update/versions/gitlab_17_changes/#issues-to-be-aware-of-when-upgrading-to-178), three new secrets have been added to `gitlab-secrets.json` to support the new encryption framework used in GitLab versions >17.9. If you have a multi-node configuration, you must [ensure the secrets are the same across all nodes](https://docs.gitlab.com/update/versions/gitlab_17_changes/#unify-new-encryption-secrets) after upgrading.
