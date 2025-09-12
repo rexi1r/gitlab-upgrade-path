@@ -20,6 +20,8 @@ collect_data() {
 	bundle exec collect_deprecations.rb
 	echo "Generating JSON alerts to alert.json..."
 	bundle exec create_json_alerts.rb
+	echo "Collecting background migrations to background_migrations.json..."
+	bundle exec collect_background_migrations.rb
 }
 
 generate_web() {
