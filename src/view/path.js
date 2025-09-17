@@ -11,22 +11,21 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import AlertTitle from "@mui/material/AlertTitle";
 import Alert from "@mui/material/Alert";
 
-
-
 // Local Components
 import Overview from "components/overview";
 import Upgrade from "components/upgrade";
 import QuickLinks from "components/quick-links";
 import EzLink from "util/ez_link";
+import BackgroundMigrations from "components/background-migrations"; // Add this import
 
 function Path() {
   let current = flux.params.selectState("current");
+  let target = flux.params.selectState("target");
   let upgradePath = flux.list.selectState("upgradePath");
   let downtime = flux.params.selectState("downtime");
   let patchVersion = flux.list.selectState("patchVersion");
 
   console.log('patchVersion', patchVersion)
-
 
   const mapVersion = { version: "map" };
   const [selectedVersion, setSelectedVersion] = useState(mapVersion);
@@ -81,7 +80,6 @@ function Path() {
       <QuickLinks />
 
       <Box sx={style.versionContainer}>
-
         <Box sx={style.versionStart}>{current.version}</Box>
         {patchVersion && <Box sx={style.versionList}>
           <Alert severity='info'>
@@ -96,7 +94,6 @@ function Path() {
             <Box sx={style.patchPrompt}>Review the release notes for the first patch version</Box>
           </Alert>
         </Box>}
-
 
         <Box sx={style.versionList}>
           <Breadcrumbs
@@ -116,24 +113,32 @@ function Path() {
         </Button>
       </Box>
 
-
       {downtime &&
         <Box sx={{ flex: 0, display: "flex", justifyContent: "center", alignItems: "center" }}>
           <Alert severity='info'>
             <AlertTitle sx={{ textAlign: "center" }}>
               <EzLink url='https://docs.gitlab.com/ee/update/zero_downtime.html' text='Zero Downtime Selected - Each minor version required' />
-
             </AlertTitle>
           </Alert>
         </Box>}
-
 
       {selectedVersion && selectedVersion.version !== "map" && (
         <Upgrade selectedVersion={selectedVersion} />
       )}
 
       {selectedVersion && selectedVersion.version === "map" && (
-        <Overview path={upgradePath} />
+        <Box sx={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'visible'
+        }}>
+          <Overview path={upgradePath} />
+          <BackgroundMigrations
+            current={current}
+            target={target}
+          />
+        </Box>
       )}
 
       <Snackbar
@@ -153,7 +158,7 @@ const style = {
     display: "flex",
     flexDirection: "column",
     alignItems: "stretch",
-    height: "100vh",
+    minHeight: "100vh",
   },
 
   fab: {

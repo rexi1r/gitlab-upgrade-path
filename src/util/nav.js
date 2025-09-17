@@ -34,9 +34,9 @@ const style = {
   view: {
     display: "flex",
     flex: 1,
-    height: "100vh",
+    minHeight: "100vh",
     width: "100vw",
     flexDirection: "column",
-    overflow: "hidden",
+    overflow: "visible",
   },
 };

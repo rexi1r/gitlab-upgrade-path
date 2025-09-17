@@ -31,6 +31,20 @@ Alerts are things that potentially span different versions where actions may nee
 1. Edit the `alerts.yml`
 2. Add a new entry
 
+## Background Migrations
+
+The tool now displays background database migrations that will run during upgrades, helping users understand:
+- Which migrations will execute between versions
+- Warnings for migrations affecting large tables
+- Migration details including affected schemas and tables
+
+### Data Generation
+Background migration data is automatically collected from the GitLab repository:
+```shell
+bundle exec collect_background_migrations.rb
+```
+This generates `ruby/background_migrations.js` with migration metadata.
+
 ## Merge Request
 
 1. Open a new merge request cc/assign @davinwalker

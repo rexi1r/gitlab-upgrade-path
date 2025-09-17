@@ -13,9 +13,10 @@ import CheckMigrations from "components/check-migrations";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Alerts from "components/alerts";
+import BackgroundMigrations from "components/background-migrations";
 
 function Overview({ path }) {
-  let target = flux.params.useState("target");
+  let target = flux.params.selectState("target");
   let distro = flux.params.useState("distro");
 
   // Start with current version
@@ -30,6 +31,8 @@ function Overview({ path }) {
         </AlertTitle>
         Review each step and the version specific upgrade notes
       </Alert>
+
+      <BackgroundMigrations current={current} target={target} summary={true} />
 
       <Box>
         <a
@@ -69,6 +72,7 @@ function Overview({ path }) {
               showAlerts={false}
               showUpgradeNotes={false}
               showUpgradeDeprecations={false}
+              showBackgroundMigrations={false}
               selectedVersion={version}
             />
           ))}

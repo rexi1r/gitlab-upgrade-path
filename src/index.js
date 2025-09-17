@@ -16,6 +16,7 @@ import "store/notes";
 import "store/deprecations";
 import "util/latest"; // Placeholder for Latest Version
 import "util/versions"; // List of all
+import "store/background_migrations";
 
 const container = document.getElementById("root");
 const root = createRoot(container);

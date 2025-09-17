@@ -16,6 +16,7 @@ import UpgradeNotes from "components/upgrade-notes";
 import Comments from "components/comments";
 import CheckMigrations from "components/check-migrations";
 import Alerts from "components/alerts";
+import BackgroundMigrations from "components/background-migrations";
 
 function Upgrade({
   selectedVersion = {},
@@ -27,6 +28,7 @@ function Upgrade({
   showUpgradeNotes = true,
   showUpgradeDeprecations = true,
   showCheckMigrations = true,
+  showBackgroundMigrations = true,
 }) {
   let distro = flux.params.useState("distro");
   let edition = flux.params.useState("edition");
@@ -99,6 +101,13 @@ function Upgrade({
       </Box>
 
       {showCheckMigrations && <CheckMigrations />}
+
+      {showBackgroundMigrations && (
+        <BackgroundMigrations
+          current={current}
+          target={selectedVersion}
+        />
+      )}
 
       {showUpgradeNotes && <UpgradeNotes version={selectedVersion} />}
 
