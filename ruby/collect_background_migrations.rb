@@ -1,7 +1,9 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'labclient'
+require 'tmpdir'
+require 'fileutils'
+require 'json'
 
 # Large tables that should trigger warnings (based on GitLab.com data)
 LARGE_TABLES = {
@@ -21,73 +23,89 @@ LARGE_TABLES = {
 }.freeze
 
 def collect_background_migrations
-  client = LabClient::Client.new(url: 'https://gitlab.com', token: '')
-  project = 'gitlab-org/gitlab'
-
   puts "🔍 Collecting background migrations from GitLab repository..."
-  puts "📁 Fetching post-migration files..."
+  puts "📁 Using shallow clone for faster processing..."
 
-  begin
-    repo_tree = client.repository.tree(project, ref: :master, path: 'db/post_migrate')
-    migrations = repo_tree.select { |item| item.name.end_with?('.rb') }
-  rescue => e
-    puts "❌ Error fetching repository tree: #{e.message}"
-    return
-  end
+  # Get the directory where this script is located (should be ruby/)
+  script_dir = File.expand_path(File.dirname(__FILE__))
 
-  puts "📄 Found #{migrations.size} migration files"
+  Dir.mktmpdir('gitlab-migrations') do |temp_dir|
+    clone_dir = File.join(temp_dir, 'gitlab')
 
-  migration_data = []
-  processed = 0
+    puts "⬇️  Cloning GitLab repository (shallow)..."
 
-  migrations.each do |file|
-    processed += 1
-    print "\r🔄 Processing file #{processed}/#{migrations.size}: #{file.name}"
-
-    begin
-      content = client.files.show(project, file.path, :master, :raw).data
-      migration_info = parse_migration_file(content, file.name)
-      migration_data << migration_info if migration_info
-    rescue => e
-      puts "\n❌ Error processing #{file.name}: #{e.message}"
+    # Shallow clone with sparse checkout for maximum speed
+    unless system("git clone --depth=1 --filter=blob:none --sparse https://gitlab.com/gitlab-org/gitlab.git #{clone_dir} 2>/dev/null")
+      puts "❌ Error: Failed to clone GitLab repository"
+      puts "   Make sure you have git installed and internet connectivity"
+      return
     end
-  end
 
-  puts "\n✅ Processed #{processed} migration files"
-  puts "🎯 Found #{migration_data.size} background migrations"
+    Dir.chdir(clone_dir) do
+      # Configure sparse checkout to only include the migration directory
+      unless system("git sparse-checkout set db/post_migrate 2>/dev/null")
+        puts "❌ Error: Failed to configure sparse checkout"
+        return
+      end
 
-  # Group by milestone/version
-  grouped_migrations = migration_data.group_by { |m| m[:milestone] }
+      migration_files = Dir.glob("db/post_migrate/*.rb").sort
+      puts "📄 Found #{migration_files.size} migration files"
 
-  # Sort by milestone
-  sorted_migrations = grouped_migrations.sort_by { |milestone, _| 
-    # Handle version sorting properly
-    version_parts = milestone.split('.').map(&:to_i)
-    version_parts[0] * 1000 + version_parts[1] * 10 + (version_parts[2] || 0)
-  }.to_h
+      migration_data = []
 
-  # src/util/background_migrations.js
-  File.write(
-    'background_migrations.js',
-    "const backgroundMigrations = #{sorted_migrations.to_json};\nexport default backgroundMigrations;"
-  )
+      migration_files.each_with_index do |file_path, index|
+        filename = File.basename(file_path)
+        print "\r\e[K🔄 Processing file #{index + 1}/#{migration_files.size}: #{filename}"
 
-  puts "\n📊 Summary:"
-  puts "   Total migrations: #{migration_data.size}"
-  puts "   Across milestones: #{grouped_migrations.size}"
-  puts "   With warnings: #{migration_data.count { |m| m[:has_large_table] }}"
+        begin
+          content = File.read(file_path)
+          migration_info = parse_migration_file(content, filename)
+          migration_data << migration_info if migration_info
+        rescue => e
+          puts "\n❌ Error processing #{filename}: #{e.message}"
+        end
+      end
 
-  puts "\n📁 Generated files:"
-  puts "   - background_migrations.js"
+      puts "\n✅ Processed #{migration_files.size} migration files"
+      puts "🎯 Found #{migration_data.size} background migrations"
 
-  puts "\n🔍 Sample migrations by milestone:"
-  sorted_migrations.each do |milestone, migrations|
-    warning_count = migrations.count { |m| m[:has_large_table] }
-    puts "   #{milestone}: #{migrations.size} migrations#{warning_count > 0 ? " (#{warning_count} with warnings)" : ""}"
+      # Group by milestone/version
+      grouped_migrations = migration_data.group_by { |m| m[:milestone] }
+
+      # Sort by milestone
+      sorted_migrations = grouped_migrations.sort_by { |milestone, _|
+        # Handle version sorting properly
+        version_parts = milestone.split('.').map(&:to_i)
+        version_parts[0] * 1000 + version_parts[1] * 10 + (version_parts[2] || 0)
+      }.to_h
+
+      # Write the JavaScript file to the same directory as this script
+      output_path = File.join(script_dir, 'background_migrations.js')
+      File.write(
+        output_path,
+        "const backgroundMigrations = #{sorted_migrations.to_json};\nexport default backgroundMigrations;"
+      )
+
+      puts "\n📊 Summary:"
+      puts "   Total migrations: #{migration_data.size}"
+      puts "   Across milestones: #{grouped_migrations.size}"
+      puts "   With warnings: #{migration_data.count { |m| m[:has_large_table] }}"
+
+      puts "\n📁 Generated files:"
+      puts "   - #{output_path}"
+
+      puts "\n🔍 Sample migrations by milestone:"
+      sorted_migrations.each do |milestone, migrations|
+        warning_count = migrations.count { |m| m[:has_large_table] }
+        puts "   #{milestone}: #{migrations.size} migrations#{warning_count > 0 ? " (#{warning_count} with warnings)" : ""}"
+      end
+    end
   end
 end
 
 def parse_migration_file(content, filename)
+  return nil unless content
+
   milestone_match = content.match(/milestone\s+['"]([^'"]+)['"]/m)
   return nil unless milestone_match
 
