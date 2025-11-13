@@ -28,7 +28,10 @@ Follow the instruction from [adding a required stop](https://docs.gitlab.com/ee/
 
 Alerts are things that potentially span different versions where actions may need to be taken.
 
-## Alert Schema
+
+<details open> 
+
+<summary> View Alert Schema </summary>
 
 ### Required Fields
 
@@ -95,6 +98,7 @@ Alerts are things that potentially span different versions where actions may nee
     If you have [npm packages](https://docs.gitlab.com/ee/update/versions/gitlab_16_changes.html#1610) 
     in your package registry, you must upgrade to **16.1** first.
 ```
+</details>
 
 ### Adding new alerts
 
