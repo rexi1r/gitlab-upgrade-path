@@ -3,27 +3,35 @@
   end: "15.4.6"
   severity: warning
   title: "Additional Steps Required for Multiple Rails Nodes"
+  requires_version: "15.1"
+  check_when: preupgrade
   message: >
     If you have multiple [web/rails nodes](https://docs.gitlab.com/ee/administration/reference_architectures/2k_users.html) 15.1 is an additional required step. See [15.2.0 Upgrade Notes](https://docs.gitlab.com/ee/update/#1520)
 
 - start: "16.0.0"
   end: "16.4.0"
   severity: warning
-  title: "Instances with NPM packages in their package registry"
-  message: >
-    If you have [npm packages](https://docs.gitlab.com/ee/update/versions/gitlab_16_changes.html#1610) in your package registry, you must upgrade to **16.1** first.
-
-- start: "16.0.0"
-  end: "16.4.0"
-  severity: warning
   title: "Large Environments with 30k Users"
+  requires_version: "16.0"
+  check_when: preupgrade
   message: >
     **16.0** is a required upgrade step for [instances with 30k Users](https://docs.gitlab.com/ee/update/versions/gitlab_16_changes.html#long-running-user-type-data-change)
 
 - start: "16.0.0"
   end: "16.4.0"
   severity: warning
+  title: "Instances with NPM packages in their package registry"
+  requires_version: "16.1"
+  check_when: preupgrade
+  message: >
+    If you have [npm packages](https://docs.gitlab.com/ee/update/versions/gitlab_16_changes.html#1610) in your package registry, you must upgrade to **16.1** first.
+
+- start: "16.0.0"
+  end: "16.4.0"
+  severity: warning
   title: "Instances with large pipeline variables history"
+  requires_version: "16.2"
+  check_when: preupgrade
   message: >
     **16.2** is a required update step for Instances with large pipeline variables history. See [16.2.0 Upgrade Notes](https://docs.gitlab.com/ee/update/#1620)
 
@@ -31,6 +39,8 @@
   end: "16.12.0"
   severity: error
   title: Expiring Access Tokens
+  requires_version: null
+  check_when: preupgrade
   message: >
     With [GitLab 16.0](https://docs.gitlab.com/ee/update/deprecations.html#non-expiring-access-tokens) all access tokens have a [forced expiry date](https://about.gitlab.com/blog/2023/10/25/access-token-lifetime-limits).
 
@@ -42,6 +52,8 @@
   end: "17.11.0"
   severity: error
   title: "Potential PostgreSQL index corruption when upgrading OS - glibc locale data compatibility"
+  requires_version: null
+  check_when: preupgrade
   message: >
     If you upgrade the operating system on which PostgreSQL runs, an upgrade of locale data changes in glibc 2.28 and later might corrupt your database indexes. See [upgrading operating systems for PostgreSQL guide for options to avoid this issue](https://docs.gitlab.com/ee/administration/postgresql/upgrading_os.html)
 
@@ -49,6 +61,8 @@
   end: "17.11.0"
   severity: warning
   title: "OpenSSL v3 Upgrade"
+  requires_version: null
+  check_when: preupgrade
   message: >
     With [GitLab 17.7](https://docs.gitlab.com/ee/update/versions/gitlab_17_changes.html#1770), the Linux package upgrades OpenSSL from from v1.1.1w to v3.0.0. Before upgrading, use the [OpenSSL 3 guide](https://docs.gitlab.com/omnibus/settings/ssl/openssl_3.html) to identify and assess the compatibility of your external integrations.
 
@@ -56,5 +70,7 @@
   end: "18.0.0"
   severity: warning
   title: "Multi-node architectures: new encryption secrets introduced in 17.8"
+  requires_version: null
+  check_when: postupgrade
   message: >
     In [GitLab 17.8](https://docs.gitlab.com/update/versions/gitlab_17_changes/#issues-to-be-aware-of-when-upgrading-to-178), three new secrets have been added to `gitlab-secrets.json` to support the new encryption framework used in GitLab versions >17.9. If you have a multi-node configuration, you must [ensure the secrets are the same across all nodes](https://docs.gitlab.com/update/versions/gitlab_17_changes/#unify-new-encryption-secrets) after upgrading.
