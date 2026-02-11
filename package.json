@@ -1,7 +1,7 @@
 {
   "name": "upgrade-path",
   "version": "0.1.0",
-  "homepage": "https://gitlab-com.gitlab.io/support/toolbox/upgrade-path",
+  "homepage": "https://rexi1r.github.io/gitlab-upgrade-path",
   "private": true,
   "dependencies": {
     "@aust/react-flux": "^1.3.1",
@@ -27,9 +27,13 @@
     "web-vitals": "^3.5.2"
   },
   "scripts": {
-    "start": "GENERATE_SOURCEMAP=false BROWSER=none react-scripts start",
-    "build": "react-scripts build",
-    "build-localhost": "PUBLIC_URL=/ react-scripts build",
+    "postinstall": "node scripts/patch-babel-polyfill.js",
+    "start": "cross-env GENERATE_SOURCEMAP=false BROWSER=none DISABLE_ESLINT_PLUGIN=true react-scripts start",
+    "build": "cross-env DISABLE_ESLINT_PLUGIN=true react-scripts build",
+    "generate": "npm run build",
+    "build:local": "cross-env DISABLE_ESLINT_PLUGIN=true PUBLIC_URL=/ react-scripts build",
+    "build-localhost": "cross-env DISABLE_ESLINT_PLUGIN=true PUBLIC_URL=/ react-scripts build",
+    "serve": "serve -s build -l 8000",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -50,5 +54,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/helper-module-imports": "^7.28.6",
+    "cross-env": "^10.1.0",
+    "serve": "^14.2.5"
   }
 }

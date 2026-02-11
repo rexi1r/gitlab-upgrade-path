@@ -1,0 +1,91 @@
+# Deploy Upgrade Path to GitHub Pages
+# Builds static site and publishes to https://rexi1r.github.io/gitlab-upgrade-path/
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.0"
+          bundler-cache: true
+          working-directory: ruby
+
+      - name: Generate data (path.json, versions, etc.)
+        run: |
+          . ./scripts/build_helpers.sh && collect_data
+        env:
+          CI: true
+
+      - name: Upload generated data
+        uses: actions/upload-artifact@v4
+        with:
+          name: ruby-generated
+          path: ruby
+
+  build:
+    needs: build-data
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore generated data
+        uses: actions/download-artifact@v4
+        with:
+          name: ruby-generated
+          path: ruby
+
+      - name: Copy data into app (setup.sh)
+        run: ./setup.sh
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build static site
+        run: yarn build
+        env:
+          CI: true
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build
+
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
